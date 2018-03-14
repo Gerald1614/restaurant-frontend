@@ -21,8 +21,8 @@
           <div slot="subtitle">Find the best restaurant</div>
         </q-toolbar-title>
         <q-btn flat dense label="Login" @click="$router.push('/login')"/>
+        <q-btn flat dense label="SignUp" @click="$router.push('/signup')"/>
         <q-btn flat dense label="Logout"/>
-        <q-btn flat dense label="SignUp"/>
       </q-toolbar>
     </q-layout-header>
 

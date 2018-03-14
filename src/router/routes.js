@@ -5,7 +5,8 @@ export default [
     component: () => import('layouts/default'),
     children: [
       { path: '', component: () => import('pages/index') },
-      { path: 'login', component: () => import('components/login.vue') }
+      { path: 'login', component: () => import('components/login.vue') },
+      { path: 'signup', component: () => import('components/signup.vue') }
     ]
   },
 
