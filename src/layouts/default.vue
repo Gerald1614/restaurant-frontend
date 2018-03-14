@@ -20,7 +20,7 @@
           Restaurant review app
           <div slot="subtitle">Find the best restaurant</div>
         </q-toolbar-title>
-        <q-btn flat dense label="Login"/>
+        <q-btn flat dense label="Login" @click="$router.push('/login')"/>
         <q-btn flat dense label="Logout"/>
         <q-btn flat dense label="SignUp"/>
       </q-toolbar>
