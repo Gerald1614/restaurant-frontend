@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import restaurants from './restaurants'
+import reviews from './reviews'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    restaurants
+    restaurants,
+    reviews
   }
 })
 

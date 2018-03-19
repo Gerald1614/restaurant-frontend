@@ -8,7 +8,7 @@
   <q-tab-pane name="restoList">
     <q-list highlight>
       <template v-for="restaurant in restaurants">
-        <q-item :key="restaurant._id">
+        <q-item   v-on:click.native="selectedResto(restaurant._id)"  :key="restaurant._id">
         <q-item-side>
           <q-item-tile avatar>
             <img :src="restaurant.picture">
@@ -34,6 +34,12 @@ import RestaurantDetails from './restaurantDetails'
 
 export default {
   components: {RestaurantDetails},
+  methods: {
+    selectedResto: function (key) {
+      console.log(key)
+      this.$store.dispatch('reviews/LOAD_REVIEWSBYID', key)
+    }
+  },
   computed: {
     restaurants: function () {
       return this.$store.state.restaurants.restaurants
