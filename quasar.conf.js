@@ -62,6 +62,7 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
+        'QItemTile',
         'QTabs',
         'QTab',
         'QTabPane'
