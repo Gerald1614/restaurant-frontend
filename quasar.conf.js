@@ -56,6 +56,7 @@ module.exports = function (ctx) {
         'QRating',
         'QToolbar',
         'QToolbarTitle',
+        'QTooltip',
         'QChip',
         'QBtn',
         'QIcon',
@@ -68,10 +69,17 @@ module.exports = function (ctx) {
         'QItemSeparator',
         'QTabs',
         'QTab',
-        'QTabPane'
+        'QTabPane',
+        'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardMedia',
+        'QCardSeparator',
+        'QCardActions'
       ],
       directives: [
-        'Ripple'
+        'Ripple',
+        'GoBack'
       ],
       // Quasar plugins
       plugins: [

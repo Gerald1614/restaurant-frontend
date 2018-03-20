@@ -1,4 +1,4 @@
 
-export const loadReviews = (state, {list}) => {
-  state.reviews = list
+export const loadReviews = (rootState, {list}) => {
+  rootState.reviews = list
 }

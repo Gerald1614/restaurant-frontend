@@ -1,17 +1,17 @@
 <template>
-<gmap-map
-    :center="center"
-    :zoom="14"
-    style="height: 400px"
-  >
-  <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
-    {{infoContent}}
-  </gmap-info-window>
-  <gmap-marker
-    :position="marker.position"
-    @click="toggleInfoWindow(marker)"
-    ></gmap-marker>
-  </gmap-map>
+    <gmap-map
+      :center="center"
+      :zoom="14"
+      style="height: 300px"
+    >
+    <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
+      {{infoContent}}
+    </gmap-info-window>
+    <gmap-marker
+      :position="marker.position"
+      @click="toggleInfoWindow(marker)"
+      ></gmap-marker>
+    </gmap-map>
 </template>
 
 <script>

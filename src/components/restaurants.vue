@@ -7,48 +7,54 @@
   <!-- Targets -->
   <q-tab-pane name="restoList">
     <q-list highlight v-for="restaurant in restaurants" :key="restaurant._id">
-        <q-item v-on:click.native="selectedResto(restaurant._id)">
+        <q-item @click.native="selectResto(restaurant._id)">
         <q-item-side>
           <q-item-tile avatar>
             <img :src="restaurant.picture">
           </q-item-tile>
         </q-item-side>
         <q-item-main>
-          <q-item-tile label> {{restaurant.name }}</q-item-tile>
+          <q-item-tile label> {{ restaurant.name }}
+            <q-rating
+            readonly
+            color="orange"
+            v-model="restaurant.avgRating"
+            :max="5"
+          >
+          </q-rating>
+          </q-item-tile>
           <q-item-tile sublabel>{{ restaurant.foodType }}</q-item-tile>
         </q-item-main>
           <q-item-side right>
-            <q-chip square color="primary" class="shadow-2">Average price : {{ restaurant.avgCost | currency }}</q-chip>
+            <q-chip square small color="primary" class="shadow-2">Price : {{ restaurant.avgCost | currency }}</q-chip>
           </q-item-side>
       </q-item>
       <q-item-separator/>
     </q-list>
-  </q-tab-pane>
+   </q-tab-pane>
   <q-tab-pane name="restoMap">
   </q-tab-pane>
   </q-tabs>
-  <restaurant-details></restaurant-details>
 </div>
 </template>
 
 <script>
 import RestaurantDetails from './restaurantDetails'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {RestaurantDetails},
   methods: {
-    selectedResto: function (key) {
-      console.log(key)
-      this.$store.dispatch('reviews/LOAD_REVIEWSBYID', key)
-      this.$store.dispatch('restaurants/SELECTED_RESTAURANT', key)
+    selectResto (key) {
+      this.$router.push({ path: `/restaurants/detail/${key}`})
     }
   },
-  computed: {
+   computed: {
     restaurants: function () {
       return this.$store.state.restaurants.restaurants
     },
     count: function () {
-      return this.$store.state.restaurants.restaurants.length
+      return this.$store.state.restaurants.restaurants.length 
     }
   },
   created: function () {

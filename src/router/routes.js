@@ -7,7 +7,8 @@ export default [
       { path: '', component: () => import('pages/index') },
       { path: 'login', component: () => import('components/login.vue') },
       { path: 'signup', component: () => import('components/signup.vue') },
-      { path: 'restaurants', component: () => import('components/restaurants.vue') }
+      { path: 'restaurants', component: () => import('components/restaurants.vue') },
+      { path: 'restaurants/detail/:id', component: () => import('components/restaurantDetails.vue') }
     ]
   },
 
