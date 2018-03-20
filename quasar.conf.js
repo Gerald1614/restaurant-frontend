@@ -34,7 +34,7 @@ module.exports = function (ctx) {
         cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
+          // loader: 'eslint-loader',
           exclude: /(node_modules|quasar)/
         })
       }
@@ -56,6 +56,7 @@ module.exports = function (ctx) {
         'QRating',
         'QToolbar',
         'QToolbarTitle',
+        'QChip',
         'QBtn',
         'QIcon',
         'QList',
@@ -64,6 +65,7 @@ module.exports = function (ctx) {
         'QItemMain',
         'QItemSide',
         'QItemTile',
+        'QItemSeparator',
         'QTabs',
         'QTab',
         'QTabPane'

@@ -8,3 +8,6 @@ export const LOAD_RESTAURANTS = function ({commit}) {
     console.log(err)
   })
 }
+export const SELECTED_RESTAURANT = function ({commit}, id) {
+  commit('selectedRestaurant', { id: id })
+}

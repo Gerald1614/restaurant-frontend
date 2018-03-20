@@ -6,9 +6,8 @@
   <q-tab  slot="title" name="restoMap" icon="map" />
   <!-- Targets -->
   <q-tab-pane name="restoList">
-    <q-list highlight>
-      <template v-for="restaurant in restaurants">
-        <q-item   v-on:click.native="selectedResto(restaurant._id)"  :key="restaurant._id">
+    <q-list highlight v-for="restaurant in restaurants" :key="restaurant._id">
+        <q-item v-on:click.native="selectedResto(restaurant._id)">
         <q-item-side>
           <q-item-tile avatar>
             <img :src="restaurant.picture">
@@ -18,8 +17,11 @@
           <q-item-tile label> {{restaurant.name }}</q-item-tile>
           <q-item-tile sublabel>{{ restaurant.foodType }}</q-item-tile>
         </q-item-main>
+          <q-item-side right>
+            <q-chip square color="primary" class="shadow-2">Average price : {{ restaurant.avgCost | currency }}</q-chip>
+          </q-item-side>
       </q-item>
-      </template>
+      <q-item-separator/>
     </q-list>
   </q-tab-pane>
   <q-tab-pane name="restoMap">
@@ -38,6 +40,7 @@ export default {
     selectedResto: function (key) {
       console.log(key)
       this.$store.dispatch('reviews/LOAD_REVIEWSBYID', key)
+      this.$store.dispatch('restaurants/SELECTED_RESTAURANT', key)
     }
   },
   computed: {
@@ -50,6 +53,12 @@ export default {
   },
   created: function () {
     this.$store.dispatch('restaurants/LOAD_RESTAURANTS')
+  },
+  filters: {
+    currency: function (value) {
+      if (!value) return ''
+      return '$ ' + value.toFixed(2)
+    }
   }
 }
 </script>
