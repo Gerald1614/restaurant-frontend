@@ -1,6 +1,7 @@
 <template>
        <div class="container">
-        <q-list highlight v-for="review in reviews" :key="review._id">
+         <div v-if="reviews.length<=0">No reviews ... yet</div>
+        <q-list v-else highlight v-for="review in reviews" :key="review._id">
           <q-item >
             <q-item-main>
               <q-item-tile label> {{review.title }} </q-item-tile>

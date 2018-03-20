@@ -60,7 +60,9 @@
     </q-layout-drawer>
 
     <q-page-container>
-      <router-view />
+      <transition name="slide" mode="out-in">    
+        <router-view />
+      </transition>
     </q-page-container>
   </q-layout>
 </template>
@@ -82,4 +84,30 @@ export default {
 </script>
 
 <style>
+.slide-enter-active {
+        animation: slide-in 300ms ease-out forwards;
+    }
+    .slide-leave-active {
+        animation: slide-out 300ms ease-out forwards;
+    }
+    @keyframes slide-in {
+        from {
+            transform: translateX(-300px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+       @keyframes slide-out {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(300px);
+            opacity: 0;
+        }
+    }
 </style>

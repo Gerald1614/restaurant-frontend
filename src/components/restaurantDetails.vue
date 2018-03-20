@@ -1,5 +1,5 @@
 <template>
-<div class="container" v-touch-swipe.horinzotal="goBack">
+<div class="container" v-touch-swipe.right="goBack">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <q-card inline>
@@ -32,9 +32,7 @@
       <restaurant-reviews></restaurant-reviews>
     </div>
   </div>
-
     <detail-map></detail-map>
- 
 </div>
 </template>
 
