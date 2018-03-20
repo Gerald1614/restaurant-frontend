@@ -7,7 +7,7 @@
   <!-- Targets -->
   <q-tab-pane name="restoList">
     <q-list highlight v-for="restaurant in restaurants" :key="restaurant._id">
-        <q-item @click.native="selectResto(restaurant._id)">
+        <q-item link @click.native="selectResto(restaurant._id)">
         <q-item-side>
           <q-item-tile avatar>
             <img :src="restaurant.picture">

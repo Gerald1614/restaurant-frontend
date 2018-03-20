@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container" v-touch-swipe.horinzotal="goBack">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <q-card inline>
@@ -8,7 +8,12 @@
         </q-card-media>
         <q-card-title>
           {{ selectedResto.name}}
-          <q-rating slot="subtitle" v-model="selectedResto.avgRating" :max="5" />
+          <q-rating 
+            readonly
+            color="orange"
+            slot="subtitle" 
+            v-model="selectedResto.avgRating" 
+            :max="5" />
           </q-card-title>
         <q-card-main>
           <p>{{ selectedResto.foodType}}</p>
@@ -39,6 +44,11 @@ import RestaurantReviews from './restaurantReviews'
 
 export default {
   components: {DetailMap, RestaurantReviews},
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+    }
+  },
   created() {
     console.log(this.$route.params)
       this.$store.dispatch('reviews/LOAD_REVIEWSBYID', this.$route.params.id)
