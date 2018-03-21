@@ -48,23 +48,13 @@
           <q-item-side icon="chat" />
           <q-item-main label="Discord Chat Channel" sublabel="https://discord.gg/5TDhbDg" />
         </q-item>
-        <q-item @click.native="openURL('http://forum.quasar-framework.org')">
-          <q-item-side icon="record_voice_over" />
-          <q-item-main label="Forum" sublabel="forum.quasar-framework.org" />
-        </q-item>
-        <q-item @click.native="openURL('https://twitter.com/quasarframework')">
-          <q-item-side icon="rss feed" />
-          <q-item-main label="Twitter" sublabel="@quasarframework" />
-        </q-item>
       </q-list>
     </q-layout-drawer>
-
     <q-page-container>
-      
-      <transition name="slide" mode="out-in">
-            <router-view/>    
-      </transition>
-        <router-view name="subs"></router-view>
+      <transition-group name="slide" mode="out-in">
+        <router-view key="main" />    
+        <router-view name="subs" key="second"></router-view>
+      </transition-group>
     </q-page-container>
   </q-layout>
 </template>

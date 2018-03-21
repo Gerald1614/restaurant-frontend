@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-pa-sm">
      <gmap-map 
       :center="center" 
       :zoom="12" 

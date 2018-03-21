@@ -1,5 +1,5 @@
 <template>
-<div class="container" v-touch-swipe.right="goBack">
+<div class="q-pa-sm" v-touch-swipe.right="goBack">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <q-card inline>
@@ -14,18 +14,16 @@
             slot="subtitle" 
             v-model="selectedResto.avgRating" 
             :max="5" />
+            <div slot="right" class="row items-center">
+              <q-btn round @click="openURL(`${restaurant.website}`)" color="primary" icon="public">
+            <q-tooltip><small>Visit website</small></q-tooltip>
+          </q-btn>
+            </div>
           </q-card-title>
         <q-card-main>
           <p>{{ selectedResto.foodType}}</p>
+          <p class="text-faded">{{ selectedResto.description }}</p>
         </q-card-main>
-        <q-card-separator />
-        <q-card-actions>
-          <q-btn flat round dense icon="event" />
-          <q-btn flat label="5:30PM" />
-          <q-btn flat label="7:30PM" />
-          <q-btn flat label="9:00PM" />
-          <q-btn flat color="primary" label="Reserve" />
-      </q-card-actions>
     </q-card>
     </div>
     <div class="colcol-xs-12 col-sm-6">
@@ -67,6 +65,5 @@ export default {
 </script>
 
 <style lang="stylus">
-.container
-  padding 10px
+
 </style>

@@ -1,13 +1,13 @@
 <template>
-<div>
+<div class="q-pa-sm">
   <q-list highlight v-for="restaurant in restaurants" :key="restaurant._id">
-      <q-item link @click.native="selectResto(restaurant._id)">
+      <q-item>
       <q-item-side>
         <q-item-tile avatar>
           <img :src="restaurant.picture">
         </q-item-tile>
       </q-item-side>
-      <q-item-main>
+      <q-item-main @click.native="selectResto(restaurant._id)">
         <q-item-tile label> {{ restaurant.name }}
           <q-rating
           readonly
@@ -17,10 +17,14 @@
         >
         </q-rating>
         </q-item-tile>
-        <q-item-tile sublabel>{{ restaurant.foodType }}</q-item-tile>
+        <q-item-tile label>{{ restaurant.foodType }}</q-item-tile>
+        <q-item-tile sublabel>{{ restaurant.description }}</q-item-tile>
       </q-item-main>
         <q-item-side right>
-          <q-chip square small color="primary" class="shadow-2">Price : {{ restaurant.avgCost | currency }}</q-chip>
+          <q-chip square size="xs" color="primary" class="shadow-2">Price : {{ restaurant.avgCost | currency }}</q-chip>
+          <q-btn round size="sm" @click="openURL(`${restaurant.website}`)" color="primary" icon="public">
+            <q-tooltip><small>Visit website</small></q-tooltip>
+          </q-btn>
         </q-item-side>
       </q-item>
       <q-item-separator/>
@@ -30,9 +34,12 @@
 </template>
 
 <script>
+import { openURL } from 'quasar'
+
 export default {
 
   methods: {
+    openURL,
     selectResto (key) {
       this.$router.push({ path: `/restaurants/detail/${key}`})
     }
@@ -52,5 +59,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+.q-item-main:hover 
+  cursor pointer
 </style>

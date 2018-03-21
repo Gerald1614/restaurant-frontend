@@ -4,6 +4,14 @@
       <div class="col-3">
         <q-input
           class="q-ma-sm"
+          v-model="form.name"
+          @blur="$v.form.name.$touch"
+          @keyup.enter="submit"
+          :error="$v.form.name.$error"
+          placeholder="Your username"
+        />
+        <q-input
+          class="q-ma-sm"
           v-model="form.email"
           @blur="$v.form.email.$touch"
           @keyup.enter="submit"
@@ -41,7 +49,8 @@ export default {
       form: {
         email: '',
         password: '',
-        passwordCheck: ''
+        passwordCheck: '',
+        name: ''
       }
     }
   },
@@ -49,13 +58,17 @@ export default {
     form: {
       email: { required, email },
       password: { required, minlength: minLength(6) },
-      passwordCheck: { required, sameAs: sameAs('password') }
+      passwordCheck: { required, sameAs: sameAs('password') },
+      name: { required, minlength: minLength(4) },
     }
   },
   methods: {
     submit () {
       this.$v.form.$touch()
-      if (this.$v.form.email.$error) {
+      if (this.$v.form.name.$error) {
+        this.$q.notify('Please define a username')
+        // return
+      } else if (this.$v.form.email.$error) {
         this.$q.notify('Please review fields again.')
         // return
       } else if (this.$v.form.password.$error) {

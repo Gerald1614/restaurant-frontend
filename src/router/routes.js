@@ -12,7 +12,8 @@ export default [
       { path: 'signup', component: () => import('components/signup.vue') },
       { path: 'restaurants/list', components: { default: restaurants, subs: liste } },
       { path: 'restaurants/map', components: { default: restaurants, subs: map } },
-      { path: 'restaurants/detail/:id', component: () => import('components/restaurantDetails.vue') }
+      { path: 'restaurants/detail/:id', component: () => import('components/restaurantDetails.vue') },
+      { path: 'restaurants/addreview/:id', component: () => import('components/addReview.vue') }
     ]
   },
 
