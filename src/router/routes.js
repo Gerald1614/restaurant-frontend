@@ -1,3 +1,6 @@
+const liste = () => import('components/restaurantsList.vue')
+const map = () => import('components/restaurantsMap.vue')
+const restaurants = () => import('components/restaurants.vue')
 
 export default [
   {
@@ -7,7 +10,8 @@ export default [
       { path: '', component: () => import('pages/index') },
       { path: 'login', component: () => import('components/login.vue') },
       { path: 'signup', component: () => import('components/signup.vue') },
-      { path: 'restaurants', component: () => import('components/restaurants.vue') },
+      { path: 'restaurants/list', components: { default: restaurants, subs: liste } },
+      { path: 'restaurants/map', components: { default: restaurants, subs: map } },
       { path: 'restaurants/detail/:id', component: () => import('components/restaurantDetails.vue') }
     ]
   },

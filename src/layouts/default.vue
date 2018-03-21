@@ -36,7 +36,7 @@
         inset-delimiter
       >
         <q-list-header >Restaurant reviews</q-list-header>
-        <q-item  to="/restaurants">
+        <q-item  to="/restaurants/list">
           <q-item-side icon="restaurant" />
           <q-item-main label="List of restaurants" />
         </q-item>
@@ -60,9 +60,11 @@
     </q-layout-drawer>
 
     <q-page-container>
-      <transition name="slide" mode="out-in">    
-        <router-view />
+      
+      <transition name="slide" mode="out-in">
+            <router-view/>    
       </transition>
+        <router-view name="subs"></router-view>
     </q-page-container>
   </q-layout>
 </template>

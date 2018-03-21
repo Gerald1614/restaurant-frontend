@@ -69,6 +69,7 @@ module.exports = function (ctx) {
         'QItemSeparator',
         'QTabs',
         'QTab',
+        'QRouteTab',
         'QTabPane',
         'QCard',
         'QCardTitle',
