@@ -41,6 +41,7 @@ export default {
   methods: {
     openURL,
     selectResto (key) {
+      this.$store.dispatch('restaurants/SELECTED_RESTAURANT', key)
       this.$router.push({ path: `/restaurants/detail/${key}`})
     }
   },

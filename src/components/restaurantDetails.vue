@@ -48,7 +48,7 @@ export default {
   created() {
     console.log(this.$route.params)
       this.$store.dispatch('reviews/LOAD_REVIEWSBYID', this.$route.params.id)
-      this.$store.dispatch('restaurants/SELECTED_RESTAURANT', this.$route.params.id)
+
   },
   computed: {
     selectedResto: function() {

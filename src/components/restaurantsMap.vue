@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     selectResto (key) {
+      this.$store.dispatch('restaurants/SELECTED_RESTAURANT', key)
       this.$router.push({ path: `/restaurants/detail/${key}`})
     },
     toggleInfoWindow: function(marker, idx) {
