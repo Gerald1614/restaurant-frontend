@@ -37,8 +37,13 @@ export default {
   },
   methods: {
     addReview() {
-      console.log(this.reviews)
-       this.$router.push({ path: `/restaurants/addReview/${this.reviews[0].restaurant}`})
+      if(!this.$store.getters['auth/currentUser']) {
+    // If not authenticated, add a path where to redirect after login.
+    this.$router.push({ path: '/login', query: { redirect: `/restaurants/addReview/${this.reviews[0].restaurant}` } });
+  } else {
+      this.$router.push({ path: `/restaurants/addReview/${this.reviews[0].restaurant}`})
+  }
+      
     }
       }
 }

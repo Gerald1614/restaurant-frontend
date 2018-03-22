@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -38,6 +39,9 @@ export default {
       },
       error: false
     }
+  },
+   computed: {
+    ...mapGetters({ currentUser: 'currentUser' })
   },
   methods: {
     submit () {
@@ -51,12 +55,14 @@ export default {
         return
       }
     localStorage.token = req.data.token
-    this.error = false
+       this.error = false
+     this.$store.dispatch('auth/login')
     this.$router.replace(this.$route.query.redirect || '/restaurants/list')
     },
 
     loginFailed () {
       this.error = 'Login failed!'
+      this.$store.dispatch('auth/logout')
       delete localStorage.token
     }
   }

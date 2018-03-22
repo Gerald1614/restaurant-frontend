@@ -41,7 +41,7 @@ export default {
       form: {
         title: '',
         text: '',
-        rating: '',
+        rating: 0,
         username: '',
         restaurant:''
       }
@@ -55,9 +55,6 @@ export default {
     }
   },
   created() {
-    if (!localStorage.token ) {
-    this.$router.push('/login')
-  }
    this.form.username = "toto"
    this.form.restaurant = this.$route.params.id
   },
