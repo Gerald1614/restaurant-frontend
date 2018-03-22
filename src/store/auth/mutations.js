@@ -1,8 +1,8 @@
-import User from '../../models/User'
 
-export const LOGIN = (state) => {
-  state.user = User.from(localStorage.token)
+export const login = (state, user) => {
+  state.user = user
 }
-export const LOGOUT = (state) => {
-  state.user = null
+export const logout = (state) => {
+  state.user.name = ''
+  state.user.token = ''
 }

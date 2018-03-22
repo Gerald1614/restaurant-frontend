@@ -5,7 +5,7 @@ const restaurants = () => import('components/restaurants.vue')
 import store from '../store'
 
 const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters['auth/currentUser']) {
+  if (!store.getters['auth/isAuthenticated']) {
     next()
     return
   }
@@ -13,7 +13,7 @@ const ifNotAuthenticated = (to, from, next) => {
 }
 
 const ifAuthenticated = (to, from, next) => {
-  if (store.getters['auth/currentUser']) {
+  if (store.getters['auth/isAuthenticated']) {
     next()
     return
   }

@@ -10,9 +10,8 @@ export default class User {
     }
   }
 
-  constructor ({ email, name, token }) {
-    this.token = token // eslint-disable-line camelcase
-    this.name = name
-    this.email = email
+  constructor ({ _id, username }) {
+    this.id = _id // eslint-disable-line camelcase
+    this.username = username
   }
 }

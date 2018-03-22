@@ -20,9 +20,9 @@
           Restaurant review app
           <div slot="subtitle">Find the best restaurant</div>
         </q-toolbar-title>
-        <q-btn flat v-if="!this.$store.getters['auth/currentUser']" dense label="Login" @click="$router.push('/login')"/>
-        <q-btn flat  v-if="!this.$store.getters['auth/currentUser']" dense label="SignUp" @click="$router.push('/signup')"/>
-        <q-btn flat  v-if="this.$store.getters['auth/currentUser']" dense label="Logout" @click="$router.push('/logout')"/>
+        <q-btn flat v-if="!this.$store.getters['auth/isAuthenticated']" dense label="Login" @click="$router.push('/login')"/>
+        <q-btn flat  v-if="!this.$store.getters['auth/isAuthenticated']" dense label="SignUp" @click="$router.push('/signup')"/>
+        <q-btn flat  v-if="this.$store.getters['auth/isAuthenticated']" dense label="Logout" @click="$router.push('/logout')"/>
       </q-toolbar>
     </q-layout-header>
 

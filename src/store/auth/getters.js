@@ -1,1 +1,2 @@
-export const currentUser = (state) => state.user
+export const isAuthenticated = (state) => state.user.token
+export const userLoggedIn = (state) => state.user.name

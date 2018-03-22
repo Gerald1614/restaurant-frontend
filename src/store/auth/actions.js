@@ -1,7 +1,7 @@
 
-export const login = ({ commit }) => {
-  commit('LOGIN')
+export const LOGIN = ({ commit }, user) => {
+  commit('login', user)
 }
-export const logout = ({ commit }) => {
-  commit('LOGOUT')
+export const LOGOUT = ({ commit }) => {
+  commit('logout')
 }

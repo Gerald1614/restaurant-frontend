@@ -55,7 +55,6 @@ export default {
     }
   },
   created() {
-   this.form.username = "toto"
    this.form.restaurant = this.$route.params.id
   },
   methods: {
@@ -74,7 +73,9 @@ export default {
         this.$q.notify('Please select a rating')
         // return
       } else {
+        this.form.username = this.$store.getters['auth/userLoggedIn']
         console.log(this.form)
+        this.$router.push(`/restaurants/detail/${this.form.restaurant}`)
       }
     }
   }

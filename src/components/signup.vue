@@ -1,7 +1,7 @@
 <template>
   <div class="container q-pa-md">
     <div class="row justify-center">
-      <div class="col-3">
+      <div class="col-6">
         <q-input
           class="q-ma-sm"
           v-model="form.name"
@@ -21,6 +21,7 @@
         <q-input
           class="q-ma-sm"
           v-model="form.password"
+          type="password"
           @blur="$v.form.password.$touch"
           @keyup.enter="submit"
           :error="$v.form.password.$error"
@@ -29,6 +30,7 @@
         <q-input
           class="q-ma-sm"
           v-model="form.passwordCheck"
+          type="password"
           @blur="$v.form.passwordCheck.$touch"
           @keyup.enter="submit"
           :error="$v.form.passwordCheck.$error"

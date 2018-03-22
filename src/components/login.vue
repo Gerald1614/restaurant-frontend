@@ -16,6 +16,7 @@
         />
         <q-input
           class="q-ma-sm"
+          type="password"
           v-model="login.password"
           placeholder="Your Password"
         />
@@ -40,9 +41,6 @@ export default {
       error: false
     }
   },
-   computed: {
-    ...mapGetters({ currentUser: 'currentUser' })
-  },
   methods: {
     submit () {
     this.$axios.post('/account/login', { email: this.login.email, password: this.login.password })
@@ -54,15 +52,15 @@ export default {
         this.loginFailed()
         return
       }
-    localStorage.token = req.data.token
-       this.error = false
-     this.$store.dispatch('auth/login')
-    this.$router.replace(this.$route.query.redirect || '/restaurants/list')
+      localStorage.token = req.data.token
+      this.error = false
+      this.$store.dispatch('auth/LOGIN', {token: req.data.token, id: req.data.id, name: req.data.name, email: req.data.user })
+      this.$router.replace(this.$route.query.redirect || '/restaurants/list')
     },
 
     loginFailed () {
       this.error = 'Login failed!'
-      this.$store.dispatch('auth/logout')
+      this.$store.dispatch('auth/LOGOUT')
       delete localStorage.token
     }
   }

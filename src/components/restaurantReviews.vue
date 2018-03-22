@@ -37,11 +37,11 @@ export default {
   },
   methods: {
     addReview() {
-      if(!this.$store.getters['auth/currentUser']) {
+      if(!this.$store.getters['auth/isAuthenticated']) {
     // If not authenticated, add a path where to redirect after login.
-    this.$router.push({ path: '/login', query: { redirect: `/restaurants/addReview/${this.reviews[0].restaurant}` } });
+    this.$router.push({ path: '/login', query: { redirect: `/restaurants/addReview/${this.$store.state.restaurants.selectedRestaurant._id}` } });
   } else {
-      this.$router.push({ path: `/restaurants/addReview/${this.reviews[0].restaurant}`})
+      this.$router.push({ path: `/restaurants/addReview/${this.$store.state.restaurants.selectedRestaurant._id}`})
   }
       
     }
