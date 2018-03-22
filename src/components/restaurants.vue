@@ -1,5 +1,5 @@
 <template>
-<div class="q-pa-sm">
+<div>
   <q-tabs align="justify">
   <q-route-tab default exact to="/restaurants/list" :count="count" slot="title" icon="list" />
   <q-route-tab  exact to="/restaurants/map" slot="title" name="restoMap" icon="map" />

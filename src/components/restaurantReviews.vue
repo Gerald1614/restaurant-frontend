@@ -1,5 +1,5 @@
 <template>
-       <div class="container">
+       <div class="q-pa-sm">
         <q-btn
           rounded
           size="sm"

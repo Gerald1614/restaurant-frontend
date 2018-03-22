@@ -22,7 +22,7 @@
         </q-toolbar-title>
         <q-btn flat dense label="Login" @click="$router.push('/login')"/>
         <q-btn flat dense label="SignUp" @click="$router.push('/signup')"/>
-        <q-btn flat dense label="Logout"/>
+        <q-btn flat dense label="Logout" @click="logout"/>
       </q-toolbar>
     </q-layout-header>
 
@@ -70,8 +70,12 @@ export default {
     }
   },
   methods: {
-    openURL
-  }
+    openURL,
+    logout: function () {
+   
+    }
+  },
+
 }
 </script>
 

@@ -10,6 +10,13 @@
           :error="$v.form.title.$error"
           placeholder="Title"
         />
+        <q-rating
+          color="orange"
+          v-model="form.rating"
+          @blur="$v.form.rating.$touch"
+          :error="$v.form.rating.$error"
+          :max="5"
+        />
         <q-input
           class="q-ma-sm"
           v-model="form.text"
@@ -18,13 +25,6 @@
           @keyup.enter="submit"
           :error="$v.form.text.$error"
           placeholder="details"
-        />
-        <q-rating
-          color="orange"
-          v-model="form.rating"
-          @blur="$v.form.rating.$touch"
-          :error="$v.form.rating.$error"
-          :max="5"
         />
         <q-btn class="q-ma-sm" color="primary" @click="submit">Submit</q-btn>
       </div>
@@ -42,7 +42,7 @@ export default {
         title: '',
         text: '',
         rating: '',
-        user: '',
+        username: '',
         restaurant:''
       }
     }
@@ -54,11 +54,18 @@ export default {
       rating: { required },
     }
   },
+  created() {
+    if (!localStorage.token ) {
+    this.$router.push('/login')
+  }
+   this.form.username = "toto"
+   this.form.restaurant = this.$route.params.id
+  },
   methods: {
     goBack() {
       this.$router.go(-1)
     },
-        submit () {
+    submit () {
       this.$v.form.$touch()
       if (this.$v.form.title.$error) {
         this.$q.notify('Title incorrect')
@@ -70,7 +77,7 @@ export default {
         this.$q.notify('Please select a rating')
         // return
       } else {
-        console.log('ok')
+        console.log(this.form)
       }
     }
   }
