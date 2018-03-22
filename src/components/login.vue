@@ -2,13 +2,6 @@
   <div class="container q-pa-md">
     <div class="row justify-center">
       <div class="col-4-sm">
-        <q-alert
-          type="negative"
-          v-if="error"
-          icon="cloud"
-          :actions="[{ label: 'Dismiss', handler: () => { visible = false } }]"
-        >{{ error }}
-        </q-alert>
         <q-input
           class="q-ma-sm"
           v-model="login.email"
@@ -22,6 +15,21 @@
         />
         <q-btn class="q-ma-sm" color="primary" @click="submit">Submit</q-btn>
         <p>Not an existing user, please <a href="/signup"> a profile</a></p>
+        <transition
+          enter-active-class="animated bounceInLeft"
+          leave-active-class="animated bounceOutRight"
+          appear
+        >
+          <q-alert
+            type="negative"
+            class="q-mt-sm"
+            v-if="error"
+            icon="cloud"
+            appear
+            :actions="[{ label: 'Dismiss', handler: () => { error = false } }]"
+          >{{ error }}
+          </q-alert>
+        </transition>
       </div>
     </div>
     
