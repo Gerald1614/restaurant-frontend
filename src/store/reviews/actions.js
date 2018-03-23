@@ -8,3 +8,19 @@ export const LOAD_REVIEWSBYID = function ({commit}, id) {
     console.log(err)
   })
 }
+export const ADD_REVIEW = function ({commit}, {id, review}) {
+  axios({
+    method: 'post',
+    url: `http://localhost:3005/v1/restaurant/reviews/add/${id}`,
+    data: JSON.stringify(review),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.token
+    }
+  }).then((response) => {
+    console.log(response.data)
+    commit('addReview', response.data)
+  }, (err) => {
+    console.log(err)
+  })
+}

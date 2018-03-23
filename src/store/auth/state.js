@@ -1,7 +1,7 @@
 
 export default {
   user: {
-    name: '',
-    token: ''
+    name: localStorage.name,
+    token: localStorage.token
   }
 }

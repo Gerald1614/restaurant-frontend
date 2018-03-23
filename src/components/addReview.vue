@@ -12,9 +12,9 @@
         />
         <q-rating
           color="orange"
-          v-model="form.rating"
-          @blur="$v.form.rating.$touch"
-          :error="$v.form.rating.$error"
+          v-model="form.rate"
+          @blur="$v.form.rate.$touch"
+          :error="$v.form.rate.$error"
           :max="5"
         />
         <q-input
@@ -41,9 +41,7 @@ export default {
       form: {
         title: '',
         text: '',
-        rating: 0,
-        username: '',
-        restaurant:''
+        rate: 0
       }
     }
   },
@@ -51,11 +49,11 @@ export default {
     form: {
       title: { required, minlength: minLength(6) },
       text: { required, minlength: minLength(6) },
-      rating: { required },
+      rate: { required },
     }
   },
   created() {
-   this.form.restaurant = this.$route.params.id
+   // this.form.restaurant = this.$route.params.id
   },
   methods: {
     goBack() {
@@ -69,12 +67,13 @@ export default {
       } else if (this.$v.form.text.$error) {
         this.$q.notify('6 characters minimum')
         // return
-      } else if (this.$v.form.rating.$error) {
+      } else if (this.$v.form.rate.$error) {
         this.$q.notify('Please select a rating')
         // return
       } else {
-        this.form.username = this.$store.getters['auth/userLoggedIn']
+        // this.form.username = this.$store.getters['auth/userLoggedIn']
         console.log(this.form)
+        this.$store.dispatch('reviews/ADD_REVIEW', {id: this.$route.params.id, review:this.form})
         this.$router.push(`/restaurants/detail/${this.form.restaurant}`)
       }
     }
