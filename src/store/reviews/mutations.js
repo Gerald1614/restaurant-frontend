@@ -1,8 +1,10 @@
 
-export const loadReviews = (state, {list}) => {
-  state.reviews = list
+export const loadReviews = (state, list) => {
+  state.reviews = list.map((elem) => {
+    return elem
+  })
 }
 export const addReview = (state, review) => {
-  console.log(review)
-  state.reviews.push(review)
+  state.reviews.push(review.data)
+
 }

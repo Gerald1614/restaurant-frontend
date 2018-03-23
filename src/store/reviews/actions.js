@@ -2,8 +2,8 @@ import axios from 'axios'
 
 export const LOAD_REVIEWSBYID = function ({commit}, id) {
   axios.get(`http://localhost:3005/v1/restaurant/reviews/${id}`).then((response) => {
-    console.log(response)
-    commit('loadReviews', { list: response.data })
+    console.log(response.data)
+    commit('loadReviews', response.data)
   }, (err) => {
     console.log(err)
   })
@@ -19,7 +19,7 @@ export const ADD_REVIEW = function ({commit}, {id, review}) {
     }
   }).then((response) => {
     console.log(response.data)
-    commit('addReview', response.data)
+    commit('addReview', response)
   }, (err) => {
     console.log(err)
   })

@@ -74,7 +74,7 @@ export default {
         // this.form.username = this.$store.getters['auth/userLoggedIn']
         console.log(this.form)
         this.$store.dispatch('reviews/ADD_REVIEW', {id: this.$route.params.id, review:this.form})
-        this.$router.push(`/restaurants/detail/${this.form.restaurant}`)
+        this.$router.push(`/restaurants/detail/${this.$route.params.id}`)
       }
     }
   }

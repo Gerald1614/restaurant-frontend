@@ -1,17 +1,7 @@
 <template>
-       <div class="q-pa-sm">
-        <q-btn
-          rounded
-          size="sm"
-          color="primary"
-          @click="addReview"
-          class="fixed"
-          icon="playlist_add"
-          label="add review"
-          style="right: 18px; top: 68px"
-        />
+       <div class="q-pa-sm"> 
          <div v-if="reviews.length<=0">No reviews ... yet</div>
-        <q-list v-else highlight v-for="review in reviews" :key="review._id">
+        <q-list v-else v-for="review in reviews" :key="review._id">
           <q-item >
             <q-item-main>
               <q-item-tile label> {{review.title }} </q-item-tile>
@@ -25,6 +15,16 @@
             </q-item-main>
           </q-item>
         </q-list>
+        <q-btn
+          rounded
+          size="sm"
+          color="primary"
+          @click="addReview"
+          class="fixed"
+          icon="playlist_add"
+          label="add review"
+          style="right: 18px; top: 68px"
+        />
       </div>
 </template>
 
