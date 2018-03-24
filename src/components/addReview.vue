@@ -61,8 +61,7 @@ export default {
   },
   computed: {
     restaurant() {
-      // console.log(this.$store.getters['restaurants/getRestoDetailById']('5aadbbd70d7a64318ef773e1'))
-      return this.$store.getters['restaurants/getRestaurants'].find(restaurant => restaurant._id === this.restoId)
+      return this.$store.getters['restaurants/getRestoDetailById'](this.restoId)
     }
   },
   methods: {

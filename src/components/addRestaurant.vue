@@ -1,7 +1,6 @@
 <template>
   <div class="q-pa-sm" v-touch-swipe.right="goBack">
-
-    <div class="row justify-center">
+    <div class="row justify-center">"toto"
       <div class="col-6">
         <q-card>
           <q-card-title>
@@ -74,12 +73,11 @@
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
+import { required, minLength, decimal } from 'vuelidate/lib/validators'
 
 export default {
   data () {
     return {
-      restoId: this.$route.params.id,
       form: {
         name: '',
         foodType: '',
@@ -141,7 +139,7 @@ export default {
       }
     }
   }
-}
+ }
 </script>
 
 <style lang="stylus" scoped>
