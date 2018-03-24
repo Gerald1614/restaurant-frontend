@@ -8,6 +8,8 @@
 export default {
   name: 'App',
   created: function () {
+    this.$store.dispatch('restaurants/LOAD_RESTAURANTS')
+
   this.$axios.interceptors.response.use(undefined, function (err) {
     return new Promise(function (resolve, reject) {
       if (err.status === 401 && err.config && !err.config.__isRetryRequest) {

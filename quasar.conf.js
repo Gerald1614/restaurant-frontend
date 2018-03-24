@@ -98,9 +98,9 @@ module.exports = function (ctx) {
     pwa: {
       cacheExt: 'js,html,css,ttf,eot,otf,woff,woff2,json,svg,gif,jpg,jpeg,png,wav,ogg,webm,flac,aac,mp4,mp3',
       manifest: {
-        // name: 'Quasar App',
-        // short_name: 'Quasar-PWA',
-        // description: 'Best PWA App in town!',
+        name: 'Restaurant reviews',
+        short_name: 'Resto reviews',
+        description: 'reviews of restaurants',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

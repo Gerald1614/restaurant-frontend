@@ -40,7 +40,7 @@
           <q-item-side icon="restaurant" />
           <q-item-main label="List of restaurants" />
         </q-item>
-        <q-item>
+        <q-item to="/restaurants/addRestaurant">
           <q-item-side icon="add_location" />
           <q-item-main label="Add a restaurant"/>
         </q-item>

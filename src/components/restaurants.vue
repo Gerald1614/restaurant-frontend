@@ -13,9 +13,6 @@ import RestaurantDetails from './restaurantDetails'
 
 export default {
   components: {RestaurantDetails},
-  created: function () {
-    this.$store.dispatch('restaurants/LOAD_RESTAURANTS')
-  },
   computed: {
     count: function () {
       return this.$store.state.restaurants.restaurants.length 
