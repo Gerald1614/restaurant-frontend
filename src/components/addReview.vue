@@ -86,11 +86,19 @@ export default {
         // return
       } else {
         console.log(this.form)
-        this.$store.dispatch('reviews/ADD_REVIEW', {id: this.restoId, review:this.form}).then(this.updateRating)
+        this.$store.dispatch('reviews/ADD_REVIEW', {id: this.restoId, review:this.form}).then(this.updateRating(this.restoId))
       }
     },
-    updateRating () {
-        this.$store.dispatch('restaurants/UPDATE_AVGRATING', {id: this.restoId, rate: this.form.rate})
+    updateRating (id) {
+        const totalReviews = this.$store.getters['reviews/getReviewsByRestoId'](id)
+        console.log(totalReviews)
+        const rating = (totalReviews.reduce((total, rate) => ({
+          rate: total.rate + rate.rate
+          })))
+          rating.rate = (rating.rate + this.form.rate) / (totalReviews.length + 1)
+        console.log(rating.rate)
+          //
+        this.$store.dispatch('restaurants/UPDATE_AVGRATING', {id: this.restoId, rate: rating.rate})
         this.$router.push(`/restaurants/detail/${this.restoId}`)
     }
   }
