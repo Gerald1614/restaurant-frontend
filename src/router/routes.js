@@ -38,7 +38,7 @@ export default [
       { path: 'logout', component: () => import('components/logout.vue') },
       { path: 'restaurants/list', components: { default: restaurants, subs: liste } },
       { path: 'restaurants/map', components: { default: restaurants, subs: map } },
-      { path: 'restaurants/addRestaurant', component: () => import('components/addRestaurant.vue') },
+      { path: 'restaurants/addRestaurant', component: () => import('components/addRestaurant.vue'), beforeEnter: ifAuthenticated },
       { path: 'restaurants/detail/:id', component: () => import('components/restaurantDetails.vue'), beforeEnter: onRefresh },
       { path: 'restaurants/addreview/:id', component: () => import('components/addReview.vue'), beforeEnter: ifAuthenticated }
     ]

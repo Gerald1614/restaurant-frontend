@@ -11,25 +11,29 @@
           <q-card-main>
           <q-input
             class="q-ma-sm"
+            float-label="Title"
             v-model="form.title"
             @blur="$v.form.title.$touch"
             @keyup.enter="submit"
             :error="$v.form.title.$error"
-            placeholder="Title"
           />
+          <p>Rating</p>
           <q-rating
             color="orange"
             v-model="form.rate"
             :max="5"
+            @blur="$v.form.rate.$touch"
+            @keyup.enter="submit"
+            :error="$v.form.rate.$error"
           />
           <q-input
             class="q-ma-sm"
+            float-label="Description"
             v-model="form.text"
             type="textarea"
             @blur="$v.form.text.$touch"
             @keyup.enter="submit"
             :error="$v.form.text.$error"
-            placeholder="details"
           />
           <q-btn class="q-ma-sm" color="primary" @click="submit">Submit</q-btn>
         </q-card-main>
@@ -49,14 +53,15 @@ export default {
       form: {
         title: '',
         text: '',
-        rate: 0
+        rate: null
       }
     }
   },
   validations: {
     form: {
       title: { required, minlength: minLength(6) },
-      text: { required, minlength: minLength(6) }
+      text: { required, minlength: minLength(6) },
+      rate: { required }
     }
   },
   computed: {
@@ -76,11 +81,17 @@ export default {
       } else if (this.$v.form.text.$error) {
         this.$q.notify('6 characters minimum')
         // return
+      }  else if (this.$v.form.rate.$error) {
+        this.$q.notify('rating is mandatory')
+        // return
       } else {
         console.log(this.form)
-        this.$store.dispatch('reviews/ADD_REVIEW', {id: this.restoId, review:this.form})
-        this.$router.push(`/restaurants/detail/${this.restoId}`)
+        this.$store.dispatch('reviews/ADD_REVIEW', {id: this.restoId, review:this.form}).then(this.updateRating)
       }
+    },
+    updateRating () {
+        this.$store.dispatch('restaurants/UPDATE_AVGRATING', {id: this.restoId, rate: this.form.rate})
+        this.$router.push(`/restaurants/detail/${this.restoId}`)
     }
   }
 }

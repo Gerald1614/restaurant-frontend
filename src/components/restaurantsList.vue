@@ -10,6 +10,7 @@
       <q-item-main @click.native="selectResto(restaurant._id)">
         <q-item-tile label> {{ restaurant.name }}
           <q-rating
+          v-if="restaurant.avgRating"
           readonly
           color="orange"
           v-model="restaurant.avgRating"

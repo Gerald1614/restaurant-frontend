@@ -15,7 +15,7 @@ export default {
   components: {RestaurantDetails},
   computed: {
     count: function () {
-      return this.$store.state.restaurants.restaurants.length 
+      return this.$store.state.restaurants.restaurants.length + ' restaurants'
     }
   },
 }

@@ -40,7 +40,7 @@
           <q-item-side icon="restaurant" />
           <q-item-main label="List of restaurants" />
         </q-item>
-        <q-item to="/restaurants/addRestaurant">
+        <q-item @click.native="addRestaurant">
           <q-item-side icon="add_location" />
           <q-item-main label="Add a restaurant"/>
         </q-item>
@@ -71,6 +71,14 @@ export default {
   },
   methods: {
     openURL,
+    addRestaurant() {
+      if(!this.$store.getters['auth/isAuthenticated']) {
+        // If not authenticated, add a path where to redirect after login.
+        this.$router.push({ path: '/login', query: { redirect: '/restaurants/addRestaurant' } });
+      } else {
+          this.$router.push({ path: '/restaurants/addRestaurant'})
+      }
+    }
   },
 
 }

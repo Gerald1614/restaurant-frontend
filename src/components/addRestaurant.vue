@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-sm" v-touch-swipe.right="goBack">
-    <div class="row justify-center">"toto"
+    <div class="row justify-center">
       <div class="col-6">
         <q-card>
           <q-card-title>
@@ -10,59 +10,69 @@
           <q-card-main>
           <q-input
             class="q-ma-sm"
+            float-label="Name of the restaurant"
             v-model="form.name"
             @blur="$v.form.name.$touch"
             @keyup.enter="submit"
             :error="$v.form.name.$error"
-            placeholder="name"
           />
           <q-input
             class="q-ma-sm"
+            float-label="Food type"
             v-model="form.foodType"
             @blur="$v.form.foodType.$touch"
             @keyup.enter="submit"
             :error="$v.form.foodType.$error"
-            placeholder="Food Type"
           />
           <q-input
             class="q-ma-sm"
+            float-label="Description"
             v-model="form.description"
             @blur="$v.form.description.$touch"
             @keyup.enter="submit"
             :error="$v.form.description.$error"
-            placeholder="description"
           />
           <q-input
             class="q-ma-sm"
+            float-label="Average cost"
             v-model="form.avgCost"
+            :before="[
+                {
+                  icon: 'monetization_on',
+                }
+              ]"
             @blur="$v.form.avgCost.$touch"
             @keyup.enter="submit"
             :error="$v.form.avgCost.$error"
-            placeholder="average Cost"
           />
           <q-input
             class="q-ma-sm"
+            float-label="url of picture of the restaurant"
             v-model="form.picture"
             @blur="$v.form.picture.$touch"
             @keyup.enter="submit"
             :error="$v.form.picture.$error"
-            placeholder="Picture of the restaurant"
           />
           <q-input
             class="q-ma-sm"
-            v-model="form.longitude"
-            @blur="$v.form.longitude.$touch"
-            @keyup.enter="submit"
-            :error="$v.form.longitude.$error"
-            placeholder="Longitude"
+            float-label="Website of the restaurant"
+            v-model="form.website"
           />
           <q-input
             class="q-ma-sm"
-            v-model="form.latitude"
-            @blur="$v.form.latitude.$touch"
+            float-label="longitude"
+            v-model="longitude"
+            @blur="$v.longitude.$touch"
             @keyup.enter="submit"
-            :error="$v.form.latitude.$error"
-            placeholder="latitude"
+            :error="$v.longitude.$error"
+          />
+          <q-input
+            class="q-ma-sm"
+            float-label="latitude"
+            v-model="latitude"
+            @blur="$v.latitude.$touch"
+            @keyup.enter="submit"
+            :error="$v.latitude.$error"
           />
           <q-btn class="q-ma-sm" color="primary" @click="submit">Submit</q-btn>
         </q-card-main>
@@ -73,7 +83,7 @@
 </template>
 
 <script>
-import { required, minLength, decimal } from 'vuelidate/lib/validators'
+import { required, minLength, between, numeric } from 'vuelidate/lib/validators'
 
 export default {
   data () {
@@ -82,15 +92,15 @@ export default {
         name: '',
         foodType: '',
         description: '',
-        avgCost:0,
+        avgCost: '',
         picture:'',
+        website:'',
         geometry: {
           coordinates: []
-        },
-        longitude:'',
-        latitude:''
-
-      }
+        }
+      },
+      longitude: '',
+      latitude: ''
     }
   },
   validations: {
@@ -98,11 +108,11 @@ export default {
       name: { required, minlength: minLength(6) },
       description: { required, minlength: minLength(6) },
       foodType: { required, minlength: minLength(6) },
-      avgCost: {required, decimal},
-      picture: { minlength: minLength(6) },
-      longitude: {required},
-      latitude: {required}
-    }
+      avgCost: {required, between: between(2, 150)},
+      picture: { minlength: minLength(6) }
+    },
+     longitude: {required, numeric},
+      latitude: {required, numeric}
   },
   
   methods: {
@@ -121,20 +131,21 @@ export default {
         this.$q.notify('6 characters minimum')
         // return
       } else if (this.$v.form.avgCost.$error) {
-        this.$q.notify('6 characters minimum')
+        this.$q.notify('cost between $2 and $150')
         // return
       } else if (this.$v.form.picture.$error) {
         this.$q.notify('6 characters minimum')
         // return
-      } else if (this.$v.form.longitude.$error) {
+      } else if (this.$v.longitude.$error) {
         this.$q.notify('6 characters minimum')
         // return
-      } else if (this.$v.form.latitude.$error) {
+      } else if (this.$v.latitude.$error) {
         this.$q.notify('6 characters minimum')
         // return
       } else {
+        this.form.geometry.coordinates.push(this.longitude, this.latitude)
         console.log(this.form)
-        this.$store.dispatch('reviews/ADD_REVIEW', {id: this.restoId, review:this.form})
+        this.$store.dispatch('restaurants/ADD_RESTAURANT', {restaurant:this.form})
         this.$router.push('/restaurants/list')
       }
     }
@@ -146,6 +157,6 @@ export default {
 @import '~variables'
 
 .q-card
-  background-color $grey-8
-  color white
+  background-color $grey-2
+  color black
 </style>

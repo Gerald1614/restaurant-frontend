@@ -9,6 +9,7 @@
         <q-card-title>
           {{ selectedResto.name}}
           <q-rating 
+            v-if="selectedResto.avgRating"
             readonly
             color="orange"
             slot="subtitle" 
