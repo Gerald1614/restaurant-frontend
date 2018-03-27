@@ -1,4 +1,6 @@
 export default {
   restaurants: [],
-  selectedRestaurant: {}
+  selectedRestaurant: {},
+  pictureRaw: '',
+  pictureFile: ''
 }

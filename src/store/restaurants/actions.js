@@ -10,6 +10,28 @@ export const LOAD_RESTAURANTS = function ({state, commit, rootState}) {
 export const SELECTED_RESTAURANT = function ({commit}, id) {
   commit('selectedRestaurant', { id: id })
 }
+
+export const ADD_PICTURE = function ({commit}, {picture}) {
+  let fileN = new Date().toISOString() + '.png'
+  var postData = new FormData()
+  postData.append('file', picture, fileN)
+  axios({
+    method: 'post',
+    url: 'http://localhost:3005/v1/restaurant/uploads',
+    data: postData,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ' + localStorage.token
+    }
+  }).then((response) => {
+    console.log(response.data)
+    commit('addPicture', response.data)
+  }, (err) => {
+    console.log(err)
+  })
+}
+
 export const ADD_RESTAURANT = function ({commit}, {restaurant}) {
   axios({
     method: 'post',

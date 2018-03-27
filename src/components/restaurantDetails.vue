@@ -65,6 +65,8 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-
+<style lang="stylus" scoped>
+.q-card
+  min-width: 300px
 </style>
+

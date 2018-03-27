@@ -45,19 +45,22 @@
             @keyup.enter="submit"
             :error="$v.form.avgCost.$error"
           />
-          <q-input
+        <camera-view></camera-view>
+          <!-- <q-input
             class="q-ma-sm"
             float-label="url of picture of the restaurant"
             v-model="form.picture"
             @blur="$v.form.picture.$touch"
             @keyup.enter="submit"
             :error="$v.form.picture.$error"
-          />
+          /> -->
           <q-input
             class="q-ma-sm"
             float-label="Website of the restaurant"
             v-model="form.website"
           />
+           <!-- <q-btn rounded @click="capture" color="secondary" icon="my_location">Get Location</q-btn> -->
+          
           <q-input
             class="q-ma-sm"
             float-label="longitude"
@@ -84,8 +87,10 @@
 
 <script>
 import { required, minLength, between, numeric } from 'vuelidate/lib/validators'
+import CameraView from './CameraView'
 
 export default {
+  components:{CameraView},
   data () {
     return {
       form: {
@@ -100,7 +105,8 @@ export default {
         }
       },
       longitude: '',
-      latitude: ''
+      latitude: '',
+      result:''
     }
   },
   validations: {
@@ -109,16 +115,15 @@ export default {
       description: { required, minlength: minLength(6) },
       foodType: { required, minlength: minLength(6) },
       avgCost: {required, between: between(2, 150)},
-      picture: { minlength: minLength(6) }
     },
      longitude: {required, numeric},
-      latitude: {required, numeric}
+    latitude: {required, numeric}
   },
-  
   methods: {
     goBack() {
       this.$router.go(-1)
     },
+  
     submit () {
       this.$v.form.$touch()
       if (this.$v.form.name.$error) {
@@ -133,9 +138,6 @@ export default {
       } else if (this.$v.form.avgCost.$error) {
         this.$q.notify('cost between $2 and $150')
         // return
-      } else if (this.$v.form.picture.$error) {
-        this.$q.notify('6 characters minimum')
-        // return
       } else if (this.$v.longitude.$error) {
         this.$q.notify('6 characters minimum')
         // return
@@ -144,9 +146,12 @@ export default {
         // return
       } else {
         this.form.geometry.coordinates.push(this.longitude, this.latitude)
-        console.log(this.form)
-        this.$store.dispatch('restaurants/ADD_RESTAURANT', {restaurant:this.form})
-        this.$router.push('/restaurants/list')
+        this.result = this.$store.getters['restaurants/getPictureFile']
+          console.log(this.result)
+          this.form.picture = 'http://localhost:3005/uploads/' +this.result.filename
+            console.log(this.form)
+             this.$store.dispatch('restaurants/ADD_RESTAURANT', {restaurant:this.form})
+             this.$router.push('/restaurants/list')
       }
     }
   }
@@ -159,4 +164,6 @@ export default {
 .q-card
   background-color $grey-2
   color black
+
+
 </style>

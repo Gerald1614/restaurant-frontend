@@ -44,10 +44,6 @@
           <q-item-side icon="add_location" />
           <q-item-main label="Add a restaurant"/>
         </q-item>
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
-          <q-item-side icon="chat" />
-          <q-item-main label="Discord Chat Channel" sublabel="https://discord.gg/5TDhbDg" />
-        </q-item>
       </q-list>
     </q-layout-drawer>
     <q-page-container>

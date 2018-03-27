@@ -8,6 +8,9 @@ export const selectedRestaurant = (state, {id}) => {
 export const addRestaurant = (state, restaurant) => {
   state.restaurants.push(restaurant.data)
 }
+export const addPicture = (state, payload) => {
+  state.pictureFile = payload
+}
 export const updateAvgRating = (state, restaurant) => {
   console.log(restaurant)
   state.selectedRestaurant = restaurant
