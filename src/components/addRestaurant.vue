@@ -53,11 +53,22 @@
           />
           <div class="row q-ma-sm items-center">
             <div class="col">
-              <q-btn  rounded @click="getLocation" color="secondary" icon="my_location">Get Location</q-btn>
+              <q-btn :loading="loading" rounded @click="getLocation" color="secondary" icon="my_location">Get Location
+              </q-btn>
             </div>
           <div class="col">
-            <p>Latitude: {{ currentLocationLat }}</p>
-            <p>Longitude: {{ currentLocationLon }} </p>
+            <p>Latitude: 
+              <q-input
+                v-model="currentLocationLat"
+                @blur="$v.currentLocationLat.$touch"
+                :error="$v.currentLocationLat.$error"
+              />
+            </p>
+            <p>Longitude: 
+              <q-input
+                v-model="currentLocationLon"
+              />
+            </p>
           </div>
           </div>
           <q-btn class="q-ma-sm full-width" color="primary" @click="submit">Submit</q-btn>
@@ -89,7 +100,8 @@ export default {
       },
       currentLocationLat: null,
       currentLocationLon: null,
-      result:''
+      result:'',
+      loading: false
     }
   },
   validations: {
@@ -98,7 +110,8 @@ export default {
       description: { required, minlength: minLength(6) },
       foodType: { required, minlength: minLength(6) },
       avgCost: {required, between: between(2, 150)},
-    }
+    },
+    currentLocationLat: {required},
   },
   methods: {
     goBack() {
@@ -106,10 +119,12 @@ export default {
     },
   getLocation() {
     if ('geolocation' in navigator) {
+      this.loading = true
       var gl = navigator.geolocation
       gl.getCurrentPosition(function(position) {
         this.currentLocationLon = position.coords.longitude
         this.currentLocationLat = position.coords.latitude
+        this.loading = false
       }.bind(this)) // bind to `this` so it's the current component.
 
     }
@@ -128,8 +143,10 @@ export default {
       } else if (this.$v.form.avgCost.$error) {
         this.$q.notify('cost between $2 and $150')
         // return
+      }  else if (this.$v.currentLocationLat.$error) {
+        this.$q.notify('Please click "Get location button"')
+        // return
       } else {
-        if(this.currentLocationLat) {
           this.form.geometry.coordinates.push(this.currentLocationLat,  this.currentLocationLon)
           this.result = this.$store.getters['restaurants/getPictureFile']
           console.log(this.result)
@@ -137,7 +154,6 @@ export default {
           console.log(this.form)
           this.$store.dispatch('restaurants/ADD_RESTAURANT', {restaurant:this.form})
           this.$router.push('/restaurants/list')
-        }
       }
     }
   }
