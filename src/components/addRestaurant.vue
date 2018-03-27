@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-sm" v-touch-swipe.right="goBack">
     <div class="row justify-center">
-      <div class="col-6">
+      <div class="col-sm-11 col-md-6">
         <q-card>
-          <q-card-title>
-            add a new restaurant
+          <q-card-title class="text-center">
+            ADD A NEW RESTAURANT
           </q-card-title>
           <q-card-separator />
           <q-card-main>
@@ -46,38 +46,21 @@
             :error="$v.form.avgCost.$error"
           />
         <camera-view></camera-view>
-          <!-- <q-input
-            class="q-ma-sm"
-            float-label="url of picture of the restaurant"
-            v-model="form.picture"
-            @blur="$v.form.picture.$touch"
-            @keyup.enter="submit"
-            :error="$v.form.picture.$error"
-          /> -->
           <q-input
             class="q-ma-sm"
             float-label="Website of the restaurant"
             v-model="form.website"
           />
-           <!-- <q-btn rounded @click="capture" color="secondary" icon="my_location">Get Location</q-btn> -->
-          
-          <q-input
-            class="q-ma-sm"
-            float-label="longitude"
-            v-model="longitude"
-            @blur="$v.longitude.$touch"
-            @keyup.enter="submit"
-            :error="$v.longitude.$error"
-          />
-          <q-input
-            class="q-ma-sm"
-            float-label="latitude"
-            v-model="latitude"
-            @blur="$v.latitude.$touch"
-            @keyup.enter="submit"
-            :error="$v.latitude.$error"
-          />
-          <q-btn class="q-ma-sm" color="primary" @click="submit">Submit</q-btn>
+          <div class="row q-ma-sm items-center">
+            <div class="col">
+              <q-btn  rounded @click="getLocation" color="secondary" icon="my_location">Get Location</q-btn>
+            </div>
+          <div class="col">
+            <p>Latitude: {{ currentLocationLat }}</p>
+            <p>Longitude: {{ currentLocationLon }} </p>
+          </div>
+          </div>
+          <q-btn class="q-ma-sm full-width" color="primary" @click="submit">Submit</q-btn>
         </q-card-main>
         </q-card>
       </div>
@@ -104,8 +87,8 @@ export default {
           coordinates: []
         }
       },
-      longitude: '',
-      latitude: '',
+      currentLocationLat: null,
+      currentLocationLon: null,
       result:''
     }
   },
@@ -115,15 +98,22 @@ export default {
       description: { required, minlength: minLength(6) },
       foodType: { required, minlength: minLength(6) },
       avgCost: {required, between: between(2, 150)},
-    },
-     longitude: {required, numeric},
-    latitude: {required, numeric}
+    }
   },
   methods: {
     goBack() {
       this.$router.go(-1)
     },
-  
+  getLocation() {
+    if ('geolocation' in navigator) {
+      var gl = navigator.geolocation
+      gl.getCurrentPosition(function(position) {
+        this.currentLocationLon = position.coords.longitude
+        this.currentLocationLat = position.coords.latitude
+      }.bind(this)) // bind to `this` so it's the current component.
+
+    }
+  },
     submit () {
       this.$v.form.$touch()
       if (this.$v.form.name.$error) {
@@ -138,20 +128,16 @@ export default {
       } else if (this.$v.form.avgCost.$error) {
         this.$q.notify('cost between $2 and $150')
         // return
-      } else if (this.$v.longitude.$error) {
-        this.$q.notify('6 characters minimum')
-        // return
-      } else if (this.$v.latitude.$error) {
-        this.$q.notify('6 characters minimum')
-        // return
       } else {
-        this.form.geometry.coordinates.push(this.longitude, this.latitude)
-        this.result = this.$store.getters['restaurants/getPictureFile']
+        if(this.currentLocationLat) {
+          this.form.geometry.coordinates.push(this.currentLocationLat,  this.currentLocationLon)
+          this.result = this.$store.getters['restaurants/getPictureFile']
           console.log(this.result)
           this.form.picture = 'http://localhost:3005/uploads/' +this.result.filename
-            console.log(this.form)
-             this.$store.dispatch('restaurants/ADD_RESTAURANT', {restaurant:this.form})
-             this.$router.push('/restaurants/list')
+          console.log(this.form)
+          this.$store.dispatch('restaurants/ADD_RESTAURANT', {restaurant:this.form})
+          this.$router.push('/restaurants/list')
+        }
       }
     }
   }
