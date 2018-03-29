@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 import restaurants from './restaurants'
 import reviews from './reviews'
 import auth from './auth'
+import cities from './cities'
+import geolocation from './geolocation'
 
 Vue.use(Vuex)
 
@@ -11,7 +13,9 @@ const store = new Vuex.Store({
   modules: {
     restaurants,
     reviews,
-    auth
+    auth,
+    cities,
+    geolocation
   }
 })
 

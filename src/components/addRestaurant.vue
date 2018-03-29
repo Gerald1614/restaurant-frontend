@@ -51,27 +51,32 @@
             float-label="Website of the restaurant"
             v-model="form.website"
           />
-          <div class="row q-ma-sm items-center">
+          <div class="row q-ma-sm">
             <div class="col">
-              <q-btn :loading="loading" rounded @click="getLocation" color="secondary" icon="my_location">Get Location
+              <q-btn :loading="loading" rounded @click="getLocation" color="secondary" icon="my_location">Update Location
               </q-btn>
+              <div>
+                <h6>{{city.name}}</h6>
+              </div>
             </div>
           <div class="col">
             <p>Latitude: 
               <q-input
-                v-model="currentLocationLat"
+                disable
+                v-model="geolocation.lat"
                 @blur="$v.currentLocationLat.$touch"
                 :error="$v.currentLocationLat.$error"
               />
             </p>
             <p>Longitude: 
               <q-input
-                v-model="currentLocationLon"
+                disable
+                v-model="geolocation.lng"
               />
             </p>
           </div>
           </div>
-          <q-btn class="q-ma-sm full-width" color="primary" @click="submit">Submit</q-btn>
+          <q-btn :disabled="this.loading" class=" q-ma-sm full-width" color="primary" @click="submit">Submit</q-btn>
         </q-card-main>
         </q-card>
       </div>
@@ -82,7 +87,14 @@
 <script>
 import { required, minLength, between, numeric } from 'vuelidate/lib/validators'
 import CameraView from './CameraView'
-
+import * as VueGoogleMaps from 'vue2-google-maps';
+import Vue from 'vue';
+ 
+  Vue.use(VueGoogleMaps, {
+    load: {
+      key: 'AIzaSyDFmZ3XQk8FfWm83i81DOL-sdpm2fuNxWw',
+    }
+  });
 export default {
   components:{CameraView},
   data () {
@@ -98,8 +110,6 @@ export default {
           coordinates: []
         }
       },
-      currentLocationLat: null,
-      currentLocationLon: null,
       result:'',
       loading: false
     }
@@ -122,8 +132,9 @@ export default {
       this.loading = true
       var gl = navigator.geolocation
       gl.getCurrentPosition(function(position) {
-        this.currentLocationLon = position.coords.longitude
-        this.currentLocationLat = position.coords.latitude
+        let latlng = {lat: position.coords.latitude, lng: position.coords.longitude}
+        this.$store.dispatch('geolocation/SET_GEOLOCATION', latlng)
+        var geocoder = new google.maps.Geocoder();
         this.loading = false
       }.bind(this)) // bind to `this` so it's the current component.
 
@@ -147,16 +158,24 @@ export default {
         this.$q.notify('Please click "Get location button"')
         // return
       } else {
-          this.form.geometry.coordinates.push(this.currentLocationLat,  this.currentLocationLon)
+          this.form.geometry.coordinates.push(this.geolocation.lat,  this.geolocation.lng)
           this.result = this.$store.getters['restaurants/getPictureFile']
           console.log(this.result)
           this.form.picture = 'http://localhost:3005/uploads/' +this.result.filename
           console.log(this.form)
-          this.$store.dispatch('restaurants/ADD_RESTAURANT', {restaurant:this.form})
+          this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: this.city._id, restaurant:this.form})
           this.$router.push('/restaurants/list')
       }
     }
-  }
+  },
+  computed: {
+    city() {
+      return this.$store.getters['cities/getSelectedCity']
+    },
+    geolocation() {
+            return this.$store.getters['geolocation/getGeolocation']
+    }
+  }, 
  }
 </script>
 

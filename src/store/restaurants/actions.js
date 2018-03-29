@@ -32,10 +32,10 @@ export const ADD_PICTURE = function ({commit}, {picture}) {
   })
 }
 
-export const ADD_RESTAURANT = function ({commit}, {restaurant}) {
+export const ADD_RESTAURANT = function ({commit}, {cityId, restaurant}) {
   axios({
     method: 'post',
-    url: 'http://localhost:3005/v1/restaurant/add',
+    url: `http://localhost:3005/v1/restaurant/add/${cityId}`,
     data: JSON.stringify(restaurant),
     headers: {
       'Content-Type': 'application/json',

@@ -4,7 +4,7 @@
     <div class="col-xs-12 col-sm-6">
       <q-card inline>
         <q-card-media>
-          <img :src="selectedResto.picture">
+          <img :style="{width : imgDisplay}" :src="selectedResto.picture">
         </q-card-media>
         <q-card-title>
           {{ selectedResto.name}}
@@ -52,6 +52,12 @@ export default {
 
   },
   computed: {
+    imgDisplay: function () {
+      if (this.selectedResto.picture === 'http://localhost:3005/uploads/restaurant_menu.png') {
+        return '96px'
+      }
+      return '100%'
+    },
     selectedResto: function() {
       return this.$store.state.restaurants.selectedRestaurant
     },
