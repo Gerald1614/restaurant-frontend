@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const LOAD_CITIES = function ({state, commit, rootState}) {
+export const LOAD_CITIES = function ({state, commit}) {
   axios.get('http://localhost:3005/v1/city').then((response) => {
     commit('loadCities', { list: response.data })
   }, (err) => {

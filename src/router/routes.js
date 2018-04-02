@@ -36,6 +36,7 @@ export default [
       { path: 'login', component: () => import('components/login.vue'), beforeEnter: ifNotAuthenticated },
       { path: 'signup', component: () => import('components/signup.vue') },
       { path: 'logout', component: () => import('components/logout.vue') },
+      { path: 'restaurants', components: { default: restaurants, subs: liste } },
       { path: 'restaurants/list', components: { default: restaurants, subs: liste } },
       { path: 'restaurants/map', components: { default: restaurants, subs: map } },
       { path: 'restaurants/addRestaurant', component: () => import('components/addRestaurant.vue'), beforeEnter: ifAuthenticated },

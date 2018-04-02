@@ -20,11 +20,14 @@
           Restaurant review app
           <div slot="subtitle">Find the best restaurant</div>
         </q-toolbar-title>
+          <q-btn v-if="!checkGeolocation" size="xs" disabled> Checking your geolocation
+            <q-spinner-rings :size="20"/>
+          </q-btn>
           <select
           v-model="selectedCity"
           @change="changeCity($event.target.value)"
         >
-        <option value="">Choose</option>
+        <option value="0"></option>
         <option v-for="city in cities" :value="city._id" >{{city.name}}</option>
         </select>
         <q-btn flat v-if="!this.$store.getters['auth/isAuthenticated']" dense label="Login" @click="$router.push('/login')"/>
@@ -37,17 +40,13 @@
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
-      <q-list
-        no-border
-        link
-        inset-delimiter
-      >
+      <q-list no-border link inset-delimiter>
         <q-list-header >Restaurant reviews</q-list-header>
         <q-item  to="/restaurants/list">
           <q-item-side icon="restaurant" />
           <q-item-main label="List of restaurants" />
         </q-item>
-        <q-item @click.native="addRestaurant">
+        <q-item to="/restaurants/addRestaurant">
           <q-item-side icon="add_location" />
           <q-item-main label="Add a restaurant"/>
         </q-item>
@@ -77,19 +76,27 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      selectedCity: '',
+      selectedCity: {},
       leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
     computed: {
     cities: function () {
       return this.$store.state.cities.cities
-    }
+    },
+    checkGeolocation() {
+      if (Object.keys(this.$store.state.cities.selectedCity).length === 0) {
+        return false
+      } else {
+        return true
+      }
+      }
   },
   methods: {
     openURL,
-    changeCity(value) {
-      this.$store.dispatch('cities/SELECTED_CITY', value)
+    changeCity(cityId) {
+      this.$store.dispatch('cities/SELECTED_CITY', cityId)
+      this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
     },
     addRestaurant() {
       if(!this.$store.getters['auth/isAuthenticated']) {
@@ -100,26 +107,33 @@ export default {
       }
     }
   },
-  created: function() {
+  mounted: function() {
     if ('geolocation' in navigator) {
       var gl = navigator.geolocation
       gl.getCurrentPosition(function(position) {
         let latlng = {lat: position.coords.latitude, lng: position.coords.longitude}
         console.log(latlng)
-        this.$store.dispatch('geolocation/SET_GEOLOCATION', latlng)
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({'location': latlng}, (results, status) => {
-          if (status === 'OK') {
-            if (results[6]) {
-              console.log(results[6])
-              this.selectedCity = results[6].formatted_address
+        this.$store.dispatch('geolocation/SET_GEOLOCATION', latlng).then(() => {
+          var geocoder = new google.maps.Geocoder();
+          geocoder.geocode({'location': latlng}, (results, status) => {
+            if (status === 'OK') {
+              if (results[0]) {
+                console.log(results)
+                 let test = results[0].address_components[3].long_name
+                 let selCity = this.$store.getters['cities/getCityDetailByName'](test)
+                   console.log(selCity),
+                   this.$store.dispatch('cities/SELECTED_CITY', selCity._id)
+                   this.selectedCity= selCity._id
+                   this.changeCity(selCity._id)
+              } else {
+                window.alert('Your city was not found, please check dropdown menu or add new city from left menu');
+              }
             } else {
-              window.alert('No results found');
+              window.alert('Geocoder failed due to: ' + status);
             }
-          } else {
-            window.alert('Geocoder failed due to: ' + status);
-          }
-        });
+          });
+        })
+
       }.bind(this)) // bind to `this` so it's the current component.
 
     }

@@ -72,6 +72,7 @@ module.exports = function (ctx) {
         'QTab',
         'QRouteTab',
         'QSelect',
+        'QSpinnerRings',
         'QTabPane',
         'QCard',
         'QCardTitle',
