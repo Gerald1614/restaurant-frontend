@@ -23,16 +23,17 @@
           <q-btn v-if="!checkGeolocation" size="xs" disabled> Checking your geolocation
             <q-spinner-rings :size="20"/>
           </q-btn>
-          <select
-          v-model="selectedCity"
-          @change="changeCity($event.target.value)"
-        >
-        <option value="0"></option>
-        <option v-for="city in cities" :value="city._id" >{{city.name}}</option>
-        </select>
-        <q-btn flat v-if="!this.$store.getters['auth/isAuthenticated']" dense label="Login" @click="$router.push('/login')"/>
-        <q-btn flat  v-if="!this.$store.getters['auth/isAuthenticated']" dense label="SignUp" @click="$router.push('/signup')"/>
-        <q-btn flat  v-if="this.$store.getters['auth/isAuthenticated']" dense label="Logout" @click="$router.push('/logout')"/>
+          <q-select
+          class="q-mx-sm"
+            inverted
+            v-model="selectedCity"
+            @input="changeCity(selectedCity)"
+            :options="loadSelect"
+          >
+          </q-select>
+          <q-btn flat v-if="!this.$store.getters['auth/isAuthenticated']" dense label="Login" @click="$router.push('/login')"/>
+          <q-btn flat  v-if="!this.$store.getters['auth/isAuthenticated']" dense label="SignUp" @click="$router.push('/signup')"/>
+          <q-btn flat  v-if="this.$store.getters['auth/isAuthenticated']" dense label="Logout" @click="$router.push('/logout')"/>
       </q-toolbar>
     </q-layout-header>
 
@@ -90,13 +91,22 @@ export default {
       } else {
         return true
       }
-      }
+    },
+    loadSelect() {
+      var liste = this.$store.getters['cities/getCities']
+        console.log(liste)
+         return liste.map (city => ({value: city._id, label: city.name}))
+    }
   },
   methods: {
     openURL,
     changeCity(cityId) {
       this.$store.dispatch('cities/SELECTED_CITY', cityId)
       this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
+      if (this.$route.path !== '/restaurants/map') {
+        console.log('toto')
+        this.$router.push({ path: '/restaurants/list'})
+        }
     },
     addRestaurant() {
       if(!this.$store.getters['auth/isAuthenticated']) {
