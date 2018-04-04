@@ -95,11 +95,14 @@ export default {
   methods: {
     openURL,
     changeCity(cityId) {
-      this.$store.dispatch('cities/SELECTED_CITY', cityId)
-      this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
+     this.loadCity(cityId)
       if (this.$route.path !== '/restaurants/map') {
         this.$router.push({ path: '/restaurants/list'})
         }
+    },
+    loadCity(cityId) {
+      this.$store.dispatch('cities/SELECTED_CITY', cityId)
+      this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
     },
     addRestaurant() {
       if(!this.$store.getters['auth/isAuthenticated']) {
@@ -118,7 +121,7 @@ export default {
           if (selCity !== undefined) {
             this.$store.dispatch('cities/SELECTED_CITY', selCity._id)
             this.selectedCity = selCity._id
-            this.changeCity(selCity._id)
+            this.loadCity(selCity._id)
           } else {
             window.alert('No retaurant yet rated inm this town, be the first to add a review');
           }

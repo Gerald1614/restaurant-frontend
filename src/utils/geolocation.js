@@ -9,7 +9,7 @@ Vue.use(VueGoogleMaps, {
 })
 
 function geolocation () {
-  return new Promise( (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     if ('geolocation' in navigator) {
       var gl = navigator.geolocation
       gl.getCurrentPosition(function (position) {

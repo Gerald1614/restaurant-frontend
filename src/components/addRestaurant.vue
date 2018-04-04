@@ -148,17 +148,25 @@ export default {
       } else {
           this.form.geometry.coordinates.push(this.geolocation.lat,  this.geolocation.lng)
           this.result = this.$store.getters['restaurants/getPictureFile']
-          console.log(this.result)
           this.form.picture = 'http://localhost:3005/uploads/' +this.result.filename
           console.log(this.form)
-          this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: this.city._id, restaurant:this.form})
-          this.$router.push('/restaurants/list')
+          let cityExists = this.$store.getters['cities/getCityDetailByName'](this.geolocation.geoCity)
+          if (cityExists === undefined) {
+             this.$store.dispatch('cities/ADD_CITY', {name: this.geolocation.geoCity}).then((response) => {
+               console.log(response)
+             this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: response._id, restaurant:this.form})
+          })
+          } else {
+            this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: cityExists._id, restaurant:this.form})
+          }
+            this.$router.push('/restaurants/list')
+         
       }
     }
   },
   computed: {
     geolocation() {
-            return this.$store.getters['geolocation/getGeolocation']
+      return this.$store.getters['geolocation/getGeolocation']
     }
   }, 
  }

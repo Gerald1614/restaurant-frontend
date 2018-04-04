@@ -10,3 +10,24 @@ export const LOAD_CITIES = function ({state, commit}) {
 export const SELECTED_CITY = function ({commit}, id) {
   commit('selectedCity', { id: id })
 }
+export const ADD_CITY = function ({commit}, geoCity) {
+  return new Promise((resolve, reject) => {
+    console.log(geoCity)
+    axios({
+      method: 'post',
+      url: `http://localhost:3005/v1/city/add`,
+      data: JSON.stringify(geoCity),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.token
+      }
+    }).then((response) => {
+      console.log(response.data)
+      commit('addCity', response)
+      resolve(response)
+    }, (err) => {
+      console.log(err)
+      reject(err)
+    })
+  })
+}
