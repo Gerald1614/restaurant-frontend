@@ -56,14 +56,14 @@
               <q-btn :loading="loading" rounded @click="getLocation" color="secondary" icon="my_location">Update Location
               </q-btn>
               <div>
-                <h6>{{city.name}}</h6>
+                <h6>{{geolocation.geoCity}}</h6>
               </div>
             </div>
           <div class="col">
             <p>Latitude: 
               <q-input
                 disable
-                v-model="geolocation.lat"
+                v-model="geolocation.latlng.lat"
                 @blur="$v.currentLocationLat.$touch"
                 :error="$v.currentLocationLat.$error"
               />
@@ -71,7 +71,7 @@
             <p>Longitude: 
               <q-input
                 disable
-                v-model="geolocation.lng"
+                v-model="geolocation.latlng.lng"
               />
             </p>
           </div>
@@ -87,14 +87,8 @@
 <script>
 import { required, minLength, between, numeric } from 'vuelidate/lib/validators'
 import CameraView from './CameraView'
-import * as VueGoogleMaps from 'vue2-google-maps';
-import Vue from 'vue';
- 
-  Vue.use(VueGoogleMaps, {
-    load: {
-      key: 'AIzaSyDFmZ3XQk8FfWm83i81DOL-sdpm2fuNxWw',
-    }
-  });
+import {geolocation} from '../utils/geolocation'
+
 export default {
   components:{CameraView},
   data () {
@@ -128,17 +122,11 @@ export default {
       this.$router.go(-1)
     },
   getLocation() {
-    if ('geolocation' in navigator) {
       this.loading = true
-      var gl = navigator.geolocation
-      gl.getCurrentPosition(function(position) {
-        let latlng = {lat: position.coords.latitude, lng: position.coords.longitude}
-        this.$store.dispatch('geolocation/SET_GEOLOCATION', latlng)
-        var geocoder = new google.maps.Geocoder();
-        this.loading = false
-      }.bind(this)) // bind to `this` so it's the current component.
+     geolocation().then ((results) => {
+      this.loading = false
+     })
 
-    }
   },
     submit () {
       this.$v.form.$touch()
@@ -169,9 +157,6 @@ export default {
     }
   },
   computed: {
-    city() {
-      return this.$store.getters['cities/getSelectedCity']
-    },
     geolocation() {
             return this.$store.getters['geolocation/getGeolocation']
     }

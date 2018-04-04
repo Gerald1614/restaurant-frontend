@@ -1,3 +1,3 @@
-export const SET_GEOLOCATION = function ({commit}, latlng) {
-  commit('setGeoLocation', { latlng: latlng })
+export const SET_GEOLOCATION = function ({commit}, payload) {
+  commit('setGeoLocation', payload)
 }

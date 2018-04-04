@@ -25,7 +25,8 @@
           </q-btn>
           <q-select
           class="q-mx-sm"
-            inverted
+          inverted
+            color="blue-9"
             v-model="selectedCity"
             @input="changeCity(selectedCity)"
             :options="loadSelect"
@@ -49,7 +50,7 @@
         </q-item>
         <q-item to="/restaurants/addRestaurant">
           <q-item-side icon="add_location" />
-          <q-item-main label="Add a restaurant"/>
+          <q-item-main label="Add a restaurant" sublabel="from your current location"/>
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -64,14 +65,7 @@
 
 <script>
 import { openURL } from 'quasar'
-import * as VueGoogleMaps from 'vue2-google-maps';
-import Vue from 'vue';
- 
-  Vue.use(VueGoogleMaps, {
-    load: {
-      key: 'AIzaSyDFmZ3XQk8FfWm83i81DOL-sdpm2fuNxWw',
-    }
-  });
+import {geolocation} from '../utils/geolocation'
 
 export default {
   name: 'LayoutDefault',
@@ -104,7 +98,6 @@ export default {
       this.$store.dispatch('cities/SELECTED_CITY', cityId)
       this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
       if (this.$route.path !== '/restaurants/map') {
-        console.log('toto')
         this.$router.push({ path: '/restaurants/list'})
         }
     },
@@ -118,40 +111,28 @@ export default {
     }
   },
   mounted: function() {
-    if ('geolocation' in navigator) {
-      var gl = navigator.geolocation
-      gl.getCurrentPosition(function(position) {
-        let latlng = {lat: position.coords.latitude, lng: position.coords.longitude}
-        console.log(latlng)
-        this.$store.dispatch('geolocation/SET_GEOLOCATION', latlng).then(() => {
-          var geocoder = new google.maps.Geocoder();
-          geocoder.geocode({'location': latlng}, (results, status) => {
-            if (status === 'OK') {
-              if (results[0]) {
-                console.log(results)
-                 let test = results[0].address_components[3].long_name
-                 let selCity = this.$store.getters['cities/getCityDetailByName'](test)
-                   console.log(selCity),
-                   this.$store.dispatch('cities/SELECTED_CITY', selCity._id)
-                   this.selectedCity= selCity._id
-                   this.changeCity(selCity._id)
-              } else {
-                window.alert('Your city was not found, please check dropdown menu or add new city from left menu');
-              }
-            } else {
-              window.alert('Geocoder failed due to: ' + status);
-            }
-          });
-        })
+     geolocation().then ((results) => {
+        if (results.geoCity) {
+          console.log(results.geoCity)
+          let selCity = this.$store.getters['cities/getCityDetailByName'](results.geoCity)
+          if (selCity !== undefined) {
+            this.$store.dispatch('cities/SELECTED_CITY', selCity._id)
+            this.selectedCity = selCity._id
+            this.changeCity(selCity._id)
+          } else {
+            window.alert('No retaurant yet rated inm this town, be the first to add a review');
+          }
+        } else {
+          window.alert('Your city was not found, please check dropdown menu or add new city from left menu');
+        }
+     })
 
-      }.bind(this)) // bind to `this` so it's the current component.
-
-    }
   }
 }
 </script>
 
 <style>
+
 .slide-enter-active {
         animation: slide-in 300ms ease-out forwards;
     }

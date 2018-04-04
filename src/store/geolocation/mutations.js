@@ -1,3 +1,3 @@
-export const setGeoLocation = (state, {latlng}) => {
-  state.geolocation = latlng
+export const setGeoLocation = (state, payload) => {
+  state.geolocation = payload
 }

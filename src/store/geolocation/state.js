@@ -1,3 +1,3 @@
 export default {
-  geolocation: {lat: '', lng: ''}
+  geolocation: {'geoCity': '', 'latlng': {lat: '', lng: ''}}
 }
