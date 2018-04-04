@@ -146,7 +146,7 @@ export default {
         this.$q.notify('Please click "Get location button"')
         // return
       } else {
-          this.form.geometry.coordinates.push(this.geolocation.lat,  this.geolocation.lng)
+          this.form.geometry.coordinates.push(this.geolocation.latlng.lat,  this.geolocation.latlng.lng)
           this.result = this.$store.getters['restaurants/getPictureFile']
           this.form.picture = 'http://localhost:3005/uploads/' +this.result.filename
           console.log(this.form)
