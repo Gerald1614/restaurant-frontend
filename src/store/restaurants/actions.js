@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const LOAD_RESTAURANTS = function ({state, commit}, id) {
+  console.log(id)
   axios.get(`http://localhost:3005/v1/restaurant/city/${id}`)
     .then((response) => {
       console.log(response)

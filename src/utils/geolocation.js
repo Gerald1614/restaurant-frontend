@@ -17,6 +17,7 @@ function geolocation () {
         var geocoder = new google.maps.Geocoder()
         geocoder.geocode({'location': latlng}, (results, status) => {
           if (status === 'OK') {
+            console.log(results)
             let geoCity = results[0].address_components[3].long_name
             store.dispatch('geolocation/SET_GEOLOCATION', {'geoCity': geoCity, 'latlng': latlng})
             resolve({'geoCity': geoCity, 'latlng': latlng})

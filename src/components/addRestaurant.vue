@@ -154,7 +154,7 @@ export default {
           if (cityExists === undefined) {
              this.$store.dispatch('cities/ADD_CITY', {name: this.geolocation.geoCity}).then((response) => {
                console.log(response)
-             this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: response._id, restaurant:this.form})
+             this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: response.data._id, restaurant:this.form})
           })
           } else {
             this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: cityExists._id, restaurant:this.form})

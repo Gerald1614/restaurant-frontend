@@ -28,7 +28,7 @@
           inverted
             color="blue-9"
             v-model="selectedCity"
-            @input="changeCity(selectedCity)"
+            :display-value= "selectText"
             :options="loadSelect"
           >
           </q-select>
@@ -71,11 +71,31 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      selectedCity: {},
       leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
-    computed: {
+  computed: { 
+    selectText: function () {
+      if (Object.keys(this.$store.state.cities.selectedCity).length === 0) {
+        return ""
+      } else {
+        return this.$store.state.cities.selectedCity.name
+      }
+      return "toto"
+
+    },
+    selectedCity: {
+      get: function() {
+       return this.$store.state.cities.getSelectedCity
+      },
+      set: function(cityId) {
+      this.$store.dispatch('cities/SELECTED_CITY', cityId)
+      this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
+       if (this.$route.path !== '/restaurants/map') {
+        this.$router.push({ path: '/restaurants/list'})
+        }
+      }
+    },
     cities: function () {
       return this.$store.state.cities.cities
     },
@@ -88,22 +108,11 @@ export default {
     },
     loadSelect() {
       var liste = this.$store.getters['cities/getCities']
-        console.log(liste)
-         return liste.map (city => ({value: city._id, label: city.name}))
+      return liste.map (city => ({value: city._id, label: city.name}))
     }
   },
   methods: {
     openURL,
-    changeCity(cityId) {
-     this.loadCity(cityId)
-      if (this.$route.path !== '/restaurants/map') {
-        this.$router.push({ path: '/restaurants/list'})
-        }
-    },
-    loadCity(cityId) {
-      this.$store.dispatch('cities/SELECTED_CITY', cityId)
-      this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
-    },
     addRestaurant() {
       if(!this.$store.getters['auth/isAuthenticated']) {
         // If not authenticated, add a path where to redirect after login.
@@ -119,11 +128,9 @@ export default {
           console.log(results.geoCity)
           let selCity = this.$store.getters['cities/getCityDetailByName'](results.geoCity)
           if (selCity !== undefined) {
-            this.$store.dispatch('cities/SELECTED_CITY', selCity._id)
             this.selectedCity = selCity._id
-            this.loadCity(selCity._id)
           } else {
-            window.alert('No retaurant yet rated inm this town, be the first to add a review');
+            window.alert('No restaurant yet rated in this town, be the first to add a review');
           }
         } else {
           window.alert('Your city was not found, please check dropdown menu or add new city from left menu');
