@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const LOAD_CITIES = function ({state, commit}) {
-  axios.get('http://localhost:3005/v1/city').then((response) => {
+  axios.get('https://restaurant-review-api.gegeraptor.com/api/v1/city').then((response) => {
     commit('loadCities', { list: response.data })
   }, (err) => {
     console.log(err)
@@ -15,7 +15,7 @@ export const ADD_CITY = function ({commit}, geoCity) {
     console.log(geoCity)
     axios({
       method: 'post',
-      url: `http://localhost:3005/v1/city/add`,
+      url: `https://restaurant-review-api.gegeraptor.com/api/v1/city/add`,
       data: JSON.stringify(geoCity),
       headers: {
         'Content-Type': 'application/json',
