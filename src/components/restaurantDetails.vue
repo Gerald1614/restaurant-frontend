@@ -16,7 +16,7 @@
             v-model="selectedResto.avgRating" 
             :max="5" />
             <div slot="right" class="row items-center">
-              <q-btn round @click="openURL(`${restaurant.website}`)" color="primary" icon="public">
+              <q-btn :disabled="selectedResto.website" round @click="openURL(`${selectedResto.website}`)" color="primary" icon="public">
             <q-tooltip><small>Visit website</small></q-tooltip>
           </q-btn>
             </div>
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     imgDisplay: function () {
-      if (this.selectedResto.picture === 'http://localhost:3005/uploads/restaurant_menu.png') {
+      if (this.selectedResto.picture === process.env.STATIC_IMG + '/images/restaurant_menu.png') {
         return '96px'
       }
       return '100%'

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const LOAD_REVIEWSBYID = function ({commit}, id) {
-  axios.get(`https://restaurant-review-api.gegeraptor.com/api/v1/restaurant/reviews/${id}`).then((response) => {
+  axios.get(process.env.API + `/restaurant/reviews/${id}`).then((response) => {
     console.log(response.data)
     commit('loadReviews', response.data)
   }, (err) => {
@@ -11,7 +11,7 @@ export const LOAD_REVIEWSBYID = function ({commit}, id) {
 export const ADD_REVIEW = function ({commit}, {id, review}) {
   axios({
     method: 'post',
-    url: `https://restaurant-review-api.gegeraptor.com/api/v1/restaurant/reviews/add/${id}`,
+    url: process.env.API + `/restaurant/reviews/add/${id}`,
     data: JSON.stringify(review),
     headers: {
       'Content-Type': 'application/json',

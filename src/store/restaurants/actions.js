@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const LOAD_RESTAURANTS = function ({state, commit}, id) {
   console.log(id)
-  axios.get(`https://restaurant-review-api.gegeraptor.com/api/v1/restaurant/city/${id}`)
+  axios.get(process.env.API + `/restaurant/city/${id}`)
     .then((response) => {
       console.log(response)
       commit('loadRestaurants', { list: response.data })
@@ -21,7 +21,7 @@ export const ADD_PICTURE = function ({commit}, {picture}) {
   postData.append('file', picture, fileN)
   axios({
     method: 'post',
-    url: 'https://restaurant-review-api.gegeraptor.com/api/v1/restaurant/uploads',
+    url: process.env.API + '/restaurant/uploads',
     data: postData,
     headers: {
       'Accept': 'application/json',
@@ -39,7 +39,7 @@ export const ADD_PICTURE = function ({commit}, {picture}) {
 export const ADD_RESTAURANT = function ({commit}, {cityId, restaurant}) {
   axios({
     method: 'post',
-    url: `https://restaurant-review-api.gegeraptor.com/api/v1/restaurant/add/${cityId}`,
+    url: process.env.API + `/restaurant/add/${cityId}`,
     data: JSON.stringify(restaurant),
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const UPDATE_AVGRATING = function ({commit, getters}, {id, rate}) {
   updatedResto.avgRating = rate
   axios({
     method: 'put',
-    url: `https://restaurant-review-api.gegeraptor.com/api/v1/restaurant/${id}`,
+    url: process.env.API + `/restaurant/${id}`,
     data: JSON.stringify(updatedResto),
     headers: {
       'Content-Type': 'application/json',

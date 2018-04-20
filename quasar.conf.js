@@ -24,6 +24,15 @@ module.exports = function (ctx) {
       remove: []
     },
     build: {
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API: JSON.stringify('http://localhost:3005/v1'),
+          STATIC_IMG: JSON.stringify('http://localhost:3005/public')
+        }
+        : { // and on build (production):
+          API: JSON.stringify('https://restaurant-review-api.gegeraptor.com/api/v1'),
+          STATIC_IMG: JSON.stringify('https://restaurant-review-api.gegeraptor.com/public')
+        },
       scopeHoisting: true,
       vueRouterMode: 'history',
       // gzip: true,

@@ -23,7 +23,7 @@
       </q-item-main>
         <q-item-side right>
           <q-chip square size="xs" color="primary" class="shadow-2">Price : {{ restaurant.avgCost | currency }}</q-chip>
-          <q-btn round size="sm" @click="openURL(`${restaurant.website}`)" color="primary" icon="public">
+          <q-btn :disabled="restaurant.website" round size="sm" @click="openURL(`${restaurant.website}`)" color="primary" icon="public">
             <q-tooltip><small>Visit website</small></q-tooltip>
           </q-btn>
         </q-item-side>

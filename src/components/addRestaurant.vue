@@ -113,6 +113,7 @@ export default {
       name: { required, minlength: minLength(6) },
       description: { required, minlength: minLength(6) },
       foodType: { required, minlength: minLength(6) },
+      website: { required, minlength: minLength(6) },
       avgCost: {required, between: between(2, 150)},
     },
     currentLocationLat: {required},
@@ -148,7 +149,7 @@ export default {
       } else {
           this.form.geometry.coordinates.push(this.geolocation.latlng.lat,  this.geolocation.latlng.lng)
           this.result = this.$store.getters['restaurants/getPictureFile']
-          this.form.picture = 'https://restaurant-review-api.gegeraptor.com/public/images/' +this.result.filename
+          this.form.picture = process.env.STATIC_IMG + '/images/' +this.result.filename
           console.log(this.form)
           let cityExists = this.$store.getters['cities/getCityDetailByName'](this.geolocation.geoCity)
           if (cityExists === undefined) {
