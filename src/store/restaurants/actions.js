@@ -8,6 +8,7 @@ export const LOAD_RESTAURANTS = function ({state, commit}, id) {
       commit('loadRestaurants', { list: response.data })
     })
     .catch((err) => {
+      console.log(err)
       commit('loadRestaurants', { list: [] })
     })
 }

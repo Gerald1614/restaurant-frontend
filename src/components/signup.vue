@@ -68,13 +68,13 @@ export default {
     submit () {
       this.$v.form.$touch()
       if (this.$v.form.name.$error) {
-        this.$q.notify('Please define a username')
+        this.$q.notify('Please define a username of 4 characters minimum')
         // return
       } else if (this.$v.form.email.$error) {
-        this.$q.notify('Please review fields again.')
+        this.$q.notify('Please review the format of the email.')
         // return
       } else if (this.$v.form.password.$error) {
-        this.$q.notify('Email must be 6 character\'s long')
+        this.$q.notify('Password must be 6 character\'s long')
         // return
       } else if (this.$v.form.passwordCheck.$error) {
         this.$q.notify('The two passwords do not match')

@@ -14,7 +14,7 @@
           placeholder="Your Password"
         />
         <q-btn class="q-ma-sm" color="primary" @click="submit">Submit</q-btn>
-        <p>Not an existing user, please <a href="/signup"> a profile</a></p>
+        <p>Not an existing user ? please <a href="/signup"> a profile</a></p>
         <transition
           enter-active-class="animated bounceInLeft"
           leave-active-class="animated bounceOutRight"
