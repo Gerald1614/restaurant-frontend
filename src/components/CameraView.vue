@@ -7,7 +7,7 @@
 </template>
 
 <script>
-
+var audio = new Audio(require('../../src/assets/camera-shutter.mp3'))
 export default {
   name:'CameraView',
   data () {
@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     capture () {
+      audio.play();
       this.$refs.video.style.display = 'none';
       this.$refs.captureBtn.disable = true;
       this.$refs.canvas.style.display = 'block';
