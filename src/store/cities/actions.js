@@ -1,7 +1,10 @@
 import axios from 'axios'
 
 export const LOAD_CITIES = function ({state, commit}) {
-  axios.get(process.env.API + '/city').then((response) => {
+  axios({
+    method: 'get',
+    url: process.env.API + '/city'
+  }).then((response) => {
     commit('loadCities', { list: response.data })
   }, (err) => {
     console.log(err)
