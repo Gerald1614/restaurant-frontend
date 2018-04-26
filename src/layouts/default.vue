@@ -91,9 +91,9 @@ export default {
       set: function(cityId) {
       this.$store.dispatch('cities/SELECTED_CITY', cityId)
       this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
-       if (this.$route.path !== '/restaurants/map') {
-        this.$router.push({ path: '/restaurants/list'})
-        }
+ //      if (this.$route.path !== '/restaurants/map') {
+ //       this.$router.push({ path: '/restaurants/list'})
+ //       }
       }
     },
     cities: function () {

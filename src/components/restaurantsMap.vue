@@ -30,11 +30,7 @@ Vue.use(VueGoogleMaps, {
 export default {
   data () {
     return {
-      center: {
-            lat: 45.5061968,
-            lng: -73.650385
-          },
-      infoContent: '',
+          infoContent: '',
           infoWindowPos: {
             lat: 0,
             lng: 0
@@ -77,6 +73,13 @@ export default {
     restaurants: function () {
       return this.$store.state.restaurants.restaurants
     },
+    center: function() {
+      if (this.$store.state.restaurants.restaurants) {
+        console.log(this.restaurants)
+        return { lat: this.restaurants[0].geometry.coordinates[0], lng: this.restaurants[0].geometry.coordinates[1]}
+    
+      }
+      },
     markers: function () {
       return this.restaurants.map(this.getMarkers)
     }

@@ -160,8 +160,9 @@ export default {
           } else {
             this.$store.dispatch('restaurants/ADD_RESTAURANT', {cityId: cityExists._id, restaurant:this.form})
           }
-            this.$router.push('/restaurants/list')
-         
+          this.$store.dispatch('cities/SELECTED_CITY', cityExists ? cityExists._id : response.data._id)
+          this.$store.dispatch('restaurants/LOAD_RESTAURANTS',cityExists ? cityExists._id : response.data._id)
+          this.$router.push('/restaurants/list')     
       }
     }
   },
