@@ -75,9 +75,7 @@ export default {
     },
     center: function() {
       if (this.$store.state.restaurants.restaurants) {
-        console.log(this.restaurants)
         return { lat: this.restaurants[0].geometry.coordinates[0], lng: this.restaurants[0].geometry.coordinates[1]}
-    
       }
       },
     markers: function () {
