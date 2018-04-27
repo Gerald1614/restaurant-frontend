@@ -91,7 +91,7 @@ export default {
       set: function(cityId) {
       this.$store.dispatch('cities/SELECTED_CITY', cityId)
       this.$store.dispatch('restaurants/LOAD_RESTAURANTS', cityId)
-       if (this.$route.path === '/') {
+       if (this.$route.path === '/' || this.$route.path.includes('restaurants/detail/')) {
         this.$router.push({ path: '/restaurants/list'})
         }
       }

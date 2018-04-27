@@ -36,6 +36,7 @@
             :error="$v.form.text.$error"
           />
           <q-btn class="q-ma-sm" color="primary" @click="submit">Submit</q-btn>
+          <q-btn class="q-ma-sm" color="secondary" @click="cancel">Cancel</q-btn>
         </q-card-main>
         </q-card>
       </div>
@@ -88,6 +89,9 @@ export default {
         console.log(this.form)
         this.$store.dispatch('reviews/ADD_REVIEW', {id: this.restoId, review:this.form}).then(this.updateRating(this.restoId))
       }
+    },
+    cancel () {
+        this.$router.go(-1)
     },
     updateRating (id) {
       let rating = 0
