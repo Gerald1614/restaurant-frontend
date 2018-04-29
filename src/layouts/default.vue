@@ -20,7 +20,8 @@
           Restaurant review app
           <div slot="subtitle">Find the best restaurant</div>
         </q-toolbar-title>
-          <q-btn v-if="!checkGeolocation" size="xs" disabled> Checking your geolocation
+          <q-btn v-if="!checkGeolocation" size="xs" @click="getGeo"> 
+            Find my location ?
             <q-spinner-rings :size="20"/>
           </q-btn>
           <q-select
@@ -48,7 +49,7 @@
           <q-item-side icon="restaurant" />
           <q-item-main label="List of restaurants" />
         </q-item>
-        <q-item to="/restaurants/addRestaurant">
+        <q-item @click.native="addRestaurant()">
           <q-item-side icon="add_location" />
           <q-item-main label="Add a restaurant" sublabel="from your current location"/>
         </q-item>
@@ -120,10 +121,9 @@ export default {
       } else {
           this.$router.push({ path: '/restaurants/addRestaurant'})
       }
-    }
-  },
-  mounted: function() {
-     geolocation().then ((results) => {
+    },
+    getGeo() {
+           geolocation().then ((results) => {
         if (results.geoCity) {
           console.log(results.geoCity)
           let selCity = this.$store.getters['cities/getCityDetailByName'](results.geoCity)
@@ -136,7 +136,7 @@ export default {
           window.alert('Your city was not found, please check dropdown menu or add new city from left menu');
         }
      })
-
+    }
   }
 }
 </script>

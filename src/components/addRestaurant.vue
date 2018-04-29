@@ -13,7 +13,6 @@
             float-label="Name of the restaurant"
             v-model="form.name"
             @blur="$v.form.name.$touch"
-            @keyup.enter="submit"
             :error="$v.form.name.$error"
           />
           <q-input
@@ -21,7 +20,6 @@
             float-label="Food type"
             v-model="form.foodType"
             @blur="$v.form.foodType.$touch"
-            @keyup.enter="submit"
             :error="$v.form.foodType.$error"
           />
           <q-input
@@ -29,7 +27,6 @@
             float-label="Description"
             v-model="form.description"
             @blur="$v.form.description.$touch"
-            @keyup.enter="submit"
             :error="$v.form.description.$error"
           />
           <q-input
@@ -42,7 +39,6 @@
                 }
               ]"
             @blur="$v.form.avgCost.$touch"
-            @keyup.enter="submit"
             :error="$v.form.avgCost.$error"
           />
         <camera-view></camera-view>
@@ -53,7 +49,7 @@
           />
           <div class="row q-ma-sm">
             <div class="col">
-              <q-btn :loading="loading" rounded @click="getLocation" color="secondary" icon="my_location">Update Location
+              <q-btn :loading="loading" rounded @click="getLocation" color="secondary" icon="my_location">get Location of the restaurant
               </q-btn>
               <div>
                 <h6>{{geolocation.geoCity}}</h6>
@@ -62,15 +58,13 @@
           <div class="col">
             <p>Latitude: 
               <q-input
-                disable
+               readonly
                 v-model="geolocation.latlng.lat"
-                @blur="$v.currentLocationLat.$touch"
-                :error="$v.currentLocationLat.$error"
               />
             </p>
             <p>Longitude: 
               <q-input
-                disable
+                readonly
                 v-model="geolocation.latlng.lng"
               />
             </p>
@@ -143,8 +137,8 @@ export default {
       } else if (this.$v.form.avgCost.$error) {
         this.$q.notify('cost between $2 and $150')
         // return
-      }  else if (this.$v.currentLocationLat.$error) {
-        this.$q.notify('Please click "Get location button"')
+      }  else if (this.geolocation.latlng.lat ==="") {
+        this.$q.notify('Please click "Get location of the restaurant button"')
         // return
       } else {
           this.form.geometry.coordinates.push(this.geolocation.latlng.lat,  this.geolocation.latlng.lng)

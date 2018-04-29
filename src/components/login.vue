@@ -64,6 +64,7 @@ export default {
       localStorage.name = req.data.name
       this.error = false
       this.$store.dispatch('auth/LOGIN', {token: req.data.token, id: req.data.id, name: req.data.name, email: req.data.user })
+      console.log(this.$route)
       this.$router.replace(this.$route.query.redirect || '/restaurants/list')
     },
 

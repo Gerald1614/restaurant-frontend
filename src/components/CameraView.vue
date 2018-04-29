@@ -7,7 +7,7 @@
 </template>
 
 <script>
-var audio = new Audio(require('../../src/assets/camera-shutter.mp3'))
+var audio = new Audio(require('../../src/statics/camera-shutter.mp3'))
 export default {
   name:'CameraView',
   data () {

@@ -111,7 +111,7 @@ module.exports = function (ctx) {
       cacheExt: 'js,html,css,ttf,eot,otf,woff,woff2,json,svg,gif,jpg,jpeg,png,wav,ogg,webm,flac,aac,mp4,mp3',
       manifest: {
         name: 'Restaurant reviews',
-        short_name: 'Resto reviews',
+        short_name: 'Resto revues',
         description: 'reviews of restaurants',
         display: 'standalone',
         orientation: 'portrait',
