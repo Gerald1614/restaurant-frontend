@@ -80,8 +80,34 @@ export default {
         this.$q.notify('The two passwords do not match')
         // return
       } else {
-        console.log('ok')
+         this.$axios.post('/account/register', { email: this.form.email, password: this.form.password, name: this.form.name })
+          .then((response) => {
+             this.$axios.post('/account/login', { email: this.form.email, password: this.form.password })
+              .then(request => this.loginSuccessful(request))
+              .catch(() => this.loginFailed())
+          })
+          .catch(() => this.signupFailed())
       }
+    },
+    loginSuccessful (req) {
+      if (!req.data.token) {
+        this.loginFailed()
+        return
+      }
+      localStorage.token = req.data.token
+      localStorage.name = req.data.name
+      this.error = false
+      this.$store.dispatch('auth/LOGIN', {token: req.data.token, id: req.data.id, name: req.data.name, email: req.data.user })
+      this.$router.push('/restaurants/list')
+    },
+
+    loginFailed () {
+      this.error = 'Login failed!'
+      this.$store.dispatch('auth/LOGOUT')
+    },
+    signupFailed () {
+      this.error = 'Signup failed!'
+            this.$router.push('/signup')
     }
   }
 }
