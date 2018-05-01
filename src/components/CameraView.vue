@@ -17,7 +17,8 @@ export default {
     },
   mounted () {
     this.$refs.canvas.style.display = 'none'
-      navigator.mediaDevices.getUserMedia({ video: true })
+      navigator.mediaDevices.getUserMedia({ video: { 
+                   facingMode: "environment"} })
         .then(mediaStream => {
           this.mediaStream = mediaStream
           this.$refs.video.srcObject = mediaStream
